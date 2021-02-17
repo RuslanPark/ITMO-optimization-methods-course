@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -8,6 +8,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.util.Pair;
+import model.CalculationMethod;
+import model.Dichotomy;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class Controller {
     public void buildGraph() {
         System.out.println("pressedBuildButton");
 
-        Dichotomy dichotomy = new Dichotomy();
+        CalculationMethod dichotomy = new Dichotomy(-2, 3, "x^2+e^(-0.35*x)");
         list = dichotomy.calculate();
 
         ObservableList<String> lines = FXCollections.observableArrayList();
