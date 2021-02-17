@@ -10,7 +10,7 @@ import java.util.List;
 public class Dichotomy extends CalculationMethod {
 
     float left, right;
-    float delta = (float) 0.01;
+    float delta = (float) 0.000001;
     float epsilon = (float) 0.0001;
     String expression;
 
@@ -21,14 +21,16 @@ public class Dichotomy extends CalculationMethod {
     }
 
     public boolean isMinimum(float x1, float x2) {
-        Expression e = new ExpressionBuilder(expression)
+        double result1 = new ExpressionBuilder(expression)
                 .variable("x")
                 .build()
-                .setVariable("x", x1);
-        double result1 = e.evaluate();
-        e.setVariable("x", x2);
-        double result2 = e.evaluate();
-
+                .setVariable("x", x1)
+                .evaluate();
+        double result2 = new ExpressionBuilder(expression)
+                .variable("x")
+                .build()
+                .setVariable("x", x2)
+                .evaluate();
         return result1 <= result2;
     }
 
@@ -38,7 +40,7 @@ public class Dichotomy extends CalculationMethod {
         List< Pair<Number, Number> > list = new ArrayList<>();
 
         list.add(new Pair<>(left, right));
-        while ((right - left / 2) > epsilon) {
+        while ((right - left) / 2 > epsilon) {
             float x1 = (left + right - delta) / 2;
             float x2 = (left + right + delta) / 2;
             if (isMinimum(x1, x2)) {
