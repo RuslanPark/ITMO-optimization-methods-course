@@ -10,37 +10,47 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller">
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <ComboBox fx:id="comboMethodsBox" onAction="#methodChosen" promptText="Chose method">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin></ComboBox>
-            <Button fx:id="buildButton" accessibleHelp="r" mnemonicParsing="false" onAction="#buildGraph" text="Build graphic">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin></Button>
-            <ComboBox fx:id="comboLineBox" onAction="#lineChosen" promptText="Chose line after building graph">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin></ComboBox>
-         </children>
-      </HBox>
-      <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" createSymbols="false" horizontalZeroLineVisible="false" verticalZeroLineVisible="false">
-        <xAxis>
-          <NumberAxis autoRanging="false" lowerBound="-5.0" side="BOTTOM" upperBound="10.0" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis autoRanging="false" lowerBound="-5.0" side="LEFT" upperBound="10.0" />
-        </yAxis>
-         <effect>
-            <Blend />
-         </effect>
-      </LineChart>
-   </children>
-   <effect>
-      <InnerShadow />
-   </effect>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.Controller">
+    <children>
+
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <ComboBox fx:id="comboMethodsBox" onAction="#methodChosen" promptText="Chose method">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </ComboBox>
+                <Button fx:id="buildButton" accessibleHelp="r" mnemonicParsing="false" onAction="#buildGraph"
+                        text="Build graphic">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </Button>
+                <ComboBox fx:id="comboLineBox" onAction="#lineChosen" promptText="Chose line after building graph">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </ComboBox>
+            </children>
+        </HBox>
+
+        <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" createSymbols="false"
+                   horizontalZeroLineVisible="false" verticalZeroLineVisible="false">
+            <xAxis>
+                <NumberAxis autoRanging="false" lowerBound="-5.0" side="BOTTOM" upperBound="10.0"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis autoRanging="false" lowerBound="-5.0" side="LEFT" upperBound="10.0"/>
+            </yAxis>
+            <effect>
+                <Blend/>
+            </effect>
+        </LineChart>
+
+    </children>
+    <effect>
+        <InnerShadow/>
+    </effect>
 </VBox>
