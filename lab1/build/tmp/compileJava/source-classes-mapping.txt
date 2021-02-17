@@ -1,0 +1,8 @@
+model/CalculationMethod.java
+ model.CalculationMethod
+Main.java
+ Main
+controllers/Controller.java
+ controllers.Controller
+model/Dichotomy.java
+ model.Dichotomy
