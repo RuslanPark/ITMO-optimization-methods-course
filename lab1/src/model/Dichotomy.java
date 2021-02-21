@@ -6,19 +6,19 @@ import java.util.List;
 
 public class Dichotomy extends CalculationMethod {
 
-    float left, right;
-    float delta = (float) 0.0001;
-    float epsilon = (float) 0.0001;
+    double left, right;
+    double delta = 0.0001;
+    double epsilon = 0.0001;
 
     public Dichotomy() {
-        this.left = -2;
-        this.right = 3;
+        this.left = 0.1;
+        this.right = 2.5;
     }
 
-    public boolean isMinimum(float x1, float x2) {
+    public boolean isMinimum(double x1, double x2) {
         // Calculate f(X1) and f(X2)
-        float result1 = (float) (x1 * x1 + Math.exp(-0.35 * x1));
-        float result2 = (float) (x2 * x2 + Math.exp(-0.35 * x2));
+        double result1 = 10 * x1 * Math.log(x1) + x1 * x1 / 2;
+        double result2 = 10 * x2 * Math.log(x2) + x2 * x2 / 2;
 
         // Is f(X1) <= f(X2)
         return result1 <= result2;
@@ -32,8 +32,8 @@ public class Dichotomy extends CalculationMethod {
 
         while ((right - left) / 2 > epsilon) {
             // Calculate X1 and X2
-            float x1 = (left + right - delta) / 2;
-            float x2 = (left + right + delta) / 2;
+            double x1 = (left + right - delta) / 2;
+            double x2 = (left + right + delta) / 2;
 
             // Check the condition
             if (isMinimum(x1, x2)) {

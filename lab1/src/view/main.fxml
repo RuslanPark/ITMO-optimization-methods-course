@@ -12,7 +12,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
       prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.Controller">
+      fx:controller="controller.Controller">
     <children>
 
         <HBox prefHeight="100.0" prefWidth="200.0">
@@ -39,10 +39,10 @@
         <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" createSymbols="false"
                    horizontalZeroLineVisible="false" verticalZeroLineVisible="false">
             <xAxis>
-                <NumberAxis autoRanging="false" lowerBound="-5.0" side="BOTTOM" upperBound="10.0"/>
+                <NumberAxis autoRanging="false" lowerBound="-1.0" side="BOTTOM" upperBound="4.0"/>
             </xAxis>
             <yAxis>
-                <NumberAxis autoRanging="false" lowerBound="-5.0" side="LEFT" upperBound="10.0"/>
+                <NumberAxis autoRanging="false" lowerBound="-5.0" side="LEFT" upperBound="30.0"/>
             </yAxis>
             <effect>
                 <Blend/>

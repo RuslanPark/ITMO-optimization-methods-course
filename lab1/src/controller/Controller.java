@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,8 +71,8 @@ public class Controller {
     public void lineChosen() {
         int chosenLinePosition = Integer.parseInt(comboLineBox.getValue());
         Pair<Number, Number> chosenPoint = list.get(chosenLinePosition - 1);
-        float a = (float) chosenPoint.getKey();
-        float b = (float) chosenPoint.getValue();
+        double a = (double) chosenPoint.getKey();
+        double b = (double) chosenPoint.getValue();
 
         // Clear chart
         lineChart.getData().clear();
@@ -80,7 +80,7 @@ public class Controller {
         // Add points (XYChart.Data) in special container (XYChart.Series)
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         while (a < b) {
-            float result = (float) (a * a + Math.exp(-0.35 * a));
+            double result = 10 * a * Math.log(a) + a * a / 2;
             a += 0.01;
             series.getData().add(new XYChart.Data<>(a, result));
         }
