@@ -11,8 +11,8 @@ public class GoldenRatio extends CalculationMethod {
     double eps = 0.0000001f;
 
     public GoldenRatio() {
-        this.a = 0;
-        this.b = 1;
+        this.a = 0.1;
+        this.b = 2.5;
     }
 
     private double functionValue(double x) {
