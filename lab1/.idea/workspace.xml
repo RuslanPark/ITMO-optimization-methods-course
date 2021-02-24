@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Bug's fixed&#10;Descriptions added&#10;Beauty effects added">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Updated for 5th variant + Double added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/controllers/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/Dichotomy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/Dichotomy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/GoldenRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/GoldenRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/view/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Dichotomy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Dichotomy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/main.fxml" afterDir="false" />
     </list>
@@ -206,17 +210,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -260,7 +253,9 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1613583652254" duration="5865000" />
       <workItem from="1613921344639" duration="39000" />
-      <workItem from="1613939887078" duration="615000" />
+      <workItem from="1613939887078" duration="1118000" />
+      <workItem from="1613988847582" duration="17000" />
+      <workItem from="1614186144659" duration="3804000" />
     </task>
     <task id="LOCAL-00001" summary="Best Version (Dichotomy works correctly)">
       <created>1613587669990</created>
@@ -283,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613589469470</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated for 5th variant + Double added">
+      <created>1613940825698</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1613940825698</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -327,7 +329,8 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="Best Version (Dichotomy works correctly)" />
     <MESSAGE value="Bug's fixed&#10;Descriptions added&#10;Beauty effects added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug's fixed&#10;Descriptions added&#10;Beauty effects added" />
+    <MESSAGE value="Updated for 5th variant + Double added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated for 5th variant + Double added" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">

@@ -16,9 +16,9 @@ public class Controller {
     public ComboBox<String> comboMethodsBox;
     public ComboBox<String> comboLineBox;
     public Button buildButton;
-    public LineChart<Number, Number> lineChart;
+    public LineChart<Double, Double> lineChart;
 
-    public List< Pair<Number, Number> > list;
+    public List< Pair<Double, Double> > list;
     CalculationMethod calculationMethod = null;
 
 
@@ -45,7 +45,8 @@ public class Controller {
 
         try {
             // Calculate plot points by chosen method
-            list = calculationMethod.calculate();
+            double res = calculationMethod.calculate();
+            list = calculationMethod.getGraphPoints();
 
             // Collect points and iterations count
             ObservableList<String> lines = FXCollections.observableArrayList();
@@ -70,15 +71,15 @@ public class Controller {
 
     public void lineChosen() {
         int chosenLinePosition = Integer.parseInt(comboLineBox.getValue());
-        Pair<Number, Number> chosenPoint = list.get(chosenLinePosition - 1);
-        double a = (double) chosenPoint.getKey();
-        double b = (double) chosenPoint.getValue();
+        Pair<Double, Double> chosenPoint = list.get(chosenLinePosition - 1);
+        double a = chosenPoint.getKey();
+        double b = chosenPoint.getValue();
 
         // Clear chart
         lineChart.getData().clear();
 
         // Add points (XYChart.Data) in special container (XYChart.Series)
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        XYChart.Series<Double, Double> series = new XYChart.Series<>();
         while (a < b) {
             double result = 10 * a * Math.log(a) + a * a / 2;
             a += 0.01;
