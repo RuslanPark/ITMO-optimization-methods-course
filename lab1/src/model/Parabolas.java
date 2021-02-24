@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Parabolas extends CalculationMethod {
     @Override
-    public List<Pair<Number, Number>> calculate() {
-        return null;
+    public double calculate() {
+        return 0;
     }
 }

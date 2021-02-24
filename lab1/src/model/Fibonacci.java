@@ -6,18 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fibonacci extends CalculationMethod {
-    private double a, b;
     int n = 100;
     List<Integer> fibNumbs = new ArrayList<>();
-
-    public Fibonacci() {
-        this.a = 0.1;
-        this.b = 2.5;
-    }
-
-    private double functionValue(double x) {
-        return 10 * x * Math.log(x) - x * x / 2;
-    }
 
     private void calcFibNumbs() {
         fibNumbs.add(1);
@@ -28,30 +18,29 @@ public class Fibonacci extends CalculationMethod {
     }
 
     @Override
-    public List<Pair<Number, Number>> calculate() {
+    public double calculate() {
         calcFibNumbs();
-        List<Pair<Number, Number>> res = new ArrayList<>();
-        res.add(new Pair<>(a, b));
-        double x1 = a + (b - a) * ((double) fibNumbs.get(n - 3) / fibNumbs.get(n - 1));
-        double x2 = a + (b - a) * ((double) fibNumbs.get(n - 2) / fibNumbs.get(n - 1));
-        double y1 = functionValue(x1);
-        double y2 = functionValue(x2);
+        graphPoints.add(new Pair<>(left, right));
+        double x1 = left + (right - left) * ((double) fibNumbs.get(n - 3) / fibNumbs.get(n - 1));
+        double x2 = left + (right - left) * ((double) fibNumbs.get(n - 2) / fibNumbs.get(n - 1));
+        double y1 = calculateFunctionValue(x1);
+        double y2 = calculateFunctionValue(x2);
         for (int i = n - 1; i > 1; --i) {
             if (y1 > y2) {
-                a = x1;
+                left = x1;
                 x1 = x2;
-                x2 = b - (x1 - a);
+                x2 = right - (x1 - left);
                 y1 = y2;
-                y2 = functionValue(x2);
+                y2 = calculateFunctionValue(x2);
             } else {
-                b = x2;
+                right = x2;
                 x2 = x1;
-                x1 = a + (b - x2);
+                x1 = left + (right - x2);
                 y2 = y1;
-                y1 = functionValue(x1);
+                y1 = calculateFunctionValue(x1);
             }
-            res.add(new Pair<>(a, b));
+            graphPoints.add(new Pair<>(left, right));
         }
-        return res;
+        return (x1 + x2) / 2;
     }
 }

@@ -6,41 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoldenRatio extends CalculationMethod {
-    double a, b;
     double t = 0.61803f;
     double eps = 0.0000001f;
 
-    public GoldenRatio() {
-        this.a = 0.1;
-        this.b = 2.5;
-    }
-
-    private double functionValue(double x) {
-        return 10 * x * Math.log(x) - x * x / 2;
-    }
-
     private boolean isLess(double x1, double x2) {
-        return functionValue(x1) < functionValue(x2);
+        return calculateFunctionValue(x1) < calculateFunctionValue(x2);
     }
 
     @Override
-    public List<Pair<Number, Number>> calculate() {
-        List<Pair<Number, Number>> res = new ArrayList<>();
-        res.add(new Pair<>(a, b));
-        double x1 = a + (1 - t)*(b - a);
-        double x2 = a + t * (b - a);
-        while ((b - a) >= eps) {
+    public double calculate() {
+        graphPoints.add(new Pair<>(left, right));
+        double x1 = left + (1 - t)*(right - left);
+        double x2 = left + t * (right - left);
+        while ((right - left) >= eps) {
             if (isLess(x1, x2)) {
-                b = x2;
+                right = x2;
                 x2 = x1;
-                x1 = a + (1 - t)*(b - a);
+                x1 = left + (1 - t)*(right - left);
             } else {
-                a = x1;
+                left = x1;
                 x1 = x2;
-                x2 = a + t * (b - a);
+                x2 = left + t * (right - left);
             }
-            res.add(new Pair<>(a, b));
+            graphPoints.add(new Pair<>(left, right));
         }
-        return res;
+        return (x1 + x2) / 2;
     }
 }
