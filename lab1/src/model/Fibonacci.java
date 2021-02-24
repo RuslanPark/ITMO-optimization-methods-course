@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fibonacci extends CalculationMethod {
-    int n = 100;
-    List<Integer> fibNumbs = new ArrayList<>();
+    final private int n = 100;
+    final private List<Integer> fibNumbs = new ArrayList<>();
 
     private void calcFibNumbs() {
         fibNumbs.add(1);

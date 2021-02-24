@@ -2,24 +2,23 @@ package model;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GoldenRatio extends CalculationMethod {
-    double t = 0.61803f;
-    double eps = 0.0000001f;
-
-    private boolean isLess(double x1, double x2) {
-        return calculateFunctionValue(x1) < calculateFunctionValue(x2);
-    }
+    //
+    final private double t = 0.61803f;
+    //
+    final private double eps = 0.0000001f;
 
     @Override
     public double calculate() {
+        // Add first full segment under study
         graphPoints.add(new Pair<>(left, right));
+        // Init x1 and x2
         double x1 = left + (1 - t)*(right - left);
         double x2 = left + t * (right - left);
+        // Calculate until get the required accuracy
         while ((right - left) >= eps) {
-            if (isLess(x1, x2)) {
+            // Checking at which point the function is smaller
+            if (isFunctionLess(x1, x2)) {
                 right = x2;
                 x2 = x1;
                 x1 = left + (1 - t)*(right - left);
@@ -28,8 +27,10 @@ public class GoldenRatio extends CalculationMethod {
                 x1 = x2;
                 x2 = left + t * (right - left);
             }
+            // Add segment
             graphPoints.add(new Pair<>(left, right));
         }
+        // Return min function
         return (x1 + x2) / 2;
     }
 }
