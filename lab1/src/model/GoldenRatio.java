@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoldenRatio extends CalculationMethod {
-    float a, b;
-    float t = 0.61803f;
-    float eps = 0.0000001f;
+    double a, b;
+    double t = 0.61803f;
+    double eps = 0.0000001f;
 
     public GoldenRatio() {
         this.a = 0;
@@ -16,7 +16,7 @@ public class GoldenRatio extends CalculationMethod {
     }
 
     private double functionValue(double x) {
-        return x;
+        return 10 * x * Math.log(x) - x * x / 2;
     }
 
     private boolean isLess(double x1, double x2) {
@@ -27,8 +27,8 @@ public class GoldenRatio extends CalculationMethod {
     public List<Pair<Number, Number>> calculate() {
         List<Pair<Number, Number>> res = new ArrayList<>();
         res.add(new Pair<>(a, b));
-        float x1 = a + (1 - t)*(b - a);
-        float x2 = a + t * (b - a);
+        double x1 = a + (1 - t)*(b - a);
+        double x2 = a + t * (b - a);
         while ((b - a) >= eps) {
             if (isLess(x1, x2)) {
                 b = x2;
