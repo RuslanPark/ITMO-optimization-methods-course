@@ -80,9 +80,10 @@ public class Controller {
 
         // Add points (XYChart.Data) in special container (XYChart.Series)
         XYChart.Series<Double, Double> series = new XYChart.Series<>();
+        double delta = (b - a) / 100;
         while (a < b) {
-            double result = 10 * a * Math.log(a) + a * a / 2;
-            a += 0.01;
+            double result = 10 * a * Math.log(a) - a * a / 2;
+            a += delta;
             series.getData().add(new XYChart.Data<>(a, result));
         }
         // Set legend format and load container with points
