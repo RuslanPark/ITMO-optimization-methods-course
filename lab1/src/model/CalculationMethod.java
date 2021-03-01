@@ -13,7 +13,7 @@ public abstract class CalculationMethod {
     // List of points for building graph
     protected final List<Pair<Double, Double>> graphPoints = new ArrayList<>();
 
-    // Abstract method fod finding minimum
+    // Abstract method for finding minimum
     public abstract double calculate();
 
     // Method return function value in x
