@@ -4,33 +4,47 @@ import javafx.util.Pair;
 
 public class GoldenRatio extends CalculationMethod {
     //
-    final private double t = 0.61803f;
+    final private double phi = 0.61803;
     //
-    final private double eps = 0.0000001f;
+    final private double epsilon;
+
+    public GoldenRatio() {
+        this.epsilon = 0.0001;
+    }
+
+    public GoldenRatio(double epsilon) {
+        this.epsilon = epsilon;
+    }
 
     @Override
     public double calculate() {
         // Add first full segment under study
         graphPoints.add(new Pair<>(left, right));
         // Init x1 and x2
-        double x1 = left + (1 - t)*(right - left);
-        double x2 = left + t * (right - left);
+        double x1 = right - phi*(right - left);
+        double x2 = left + phi * (right - left);
+        double y1 = calculateFunctionValue(x1);
+        double y2 = calculateFunctionValue(x2);
         // Calculate until get the required accuracy
-        while ((right - left) >= eps) {
+        while ((right - left) / 2 > epsilon) {
             // Checking at which point the function is smaller
-            if (isFunctionLess(x1, x2)) {
+            if (y1 <= y2) {
                 right = x2;
                 x2 = x1;
-                x1 = left + (1 - t)*(right - left);
+                x1 = right - phi*(right - left);
+                y2 = y1;
+                y1 = calculateFunctionValue(x1);
             } else {
                 left = x1;
                 x1 = x2;
-                x2 = left + t * (right - left);
+                x2 = left + phi * (right - left);
+                y1 = y2;
+                y2 = calculateFunctionValue(x2);
             }
             // Add segment
             graphPoints.add(new Pair<>(left, right));
         }
         // Return min function
-        return (x1 + x2) / 2;
+        return (left + right) / 2;
     }
 }

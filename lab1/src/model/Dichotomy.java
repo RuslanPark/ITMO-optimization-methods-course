@@ -3,8 +3,18 @@ package model;
 import javafx.util.Pair;
 
 public class Dichotomy extends CalculationMethod {
-    final private double delta = 0.000001;
-    final private double epsilon = 0.0001;
+    final private double delta;
+    final private double epsilon;
+
+    public Dichotomy() {
+        this.delta = 0.000001;
+        this.epsilon = 0.0001;
+    }
+
+    public Dichotomy(double delta, double epsilon) {
+        this.delta = delta;
+        this.epsilon = epsilon;
+    }
 
     @Override
     public double calculate() {
