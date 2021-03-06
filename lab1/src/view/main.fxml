@@ -33,7 +33,7 @@
             </children>
         </HBox>
 
-        <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" cacheShape="false" createSymbols="false" horizontalZeroLineVisible="false" scaleShape="false" verticalZeroLineVisible="false">
+        <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" cacheShape="false" horizontalZeroLineVisible="false" scaleShape="false" verticalZeroLineVisible="false">
             <xAxis>
                 <NumberAxis animated="false" forceZeroInRange="false" lowerBound="-1.0" minorTickCount="1" side="BOTTOM" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="4.0" />
             </xAxis>
@@ -49,4 +49,5 @@
     <effect>
         <InnerShadow />
     </effect>
+
 </VBox>

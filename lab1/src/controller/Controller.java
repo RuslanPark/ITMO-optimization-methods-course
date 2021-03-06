@@ -1,31 +1,45 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.*;
+
+import java.net.URL;
 import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class Controller {
 
-    public ComboBox<String> comboMethodsBox;
-    public ComboBox<String> comboLineBox;
-    public Button buildButton;
-    public LineChart<Double, Double> lineChart;
+    @FXML
+    private ComboBox<String> comboMethodsBox, comboLineBox;
+    @FXML
+    private Button buildButton;
+    @FXML
+    private LineChart<Double, Double> lineChart;
 
     public List< Pair<Double, Double> > list;
     CalculationMethod calculationMethod = null;
 
-
+    @FXML
     public void initialize() {
         ObservableList<String> methods = FXCollections.observableArrayList("Dichotomy", "Golden ratio", "Fibonacci", "Parabolas","Brent's");
         comboMethodsBox.setItems(methods);
-
     }
 
     public void methodChosen() {
@@ -36,6 +50,10 @@ public class Controller {
             case ("Parabolas") -> calculationMethod = new Parabolas();
             default -> calculationMethod = new Brents();
         }
+
+        OptionsMenu menu = new OptionsMenu();
+        menu.showMenu();
+
     }
 
     public void buildGraph() {
@@ -90,5 +108,4 @@ public class Controller {
         series.setName("Left X= " + chosenPoint.getKey() + "  |  Right X= " + chosenPoint.getValue());
         lineChart.getData().add(series);
     }
-
 }

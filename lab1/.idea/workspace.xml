@@ -4,11 +4,18 @@
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Updated for 5th variant + Double added">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Brents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Brents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/CalculationMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/CalculationMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Parabolas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Parabolas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/Brents.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/Brents.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/CalculationMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/CalculationMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/Dichotomy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/Dichotomy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/Fibonacci.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/Fibonacci.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/GoldenRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/GoldenRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/model/Parabolas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/model/Parabolas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/view/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/view/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/lab1/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/lab1/view/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/main.fxml" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +111,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -115,55 +122,9 @@
       <recent name="controllers" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
-      <Host>localhost</Host>
-      <Port>5050</Port>
-    </configuration>
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="view.Main" />
-      <module name="lab1" />
-      <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="sample.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -188,6 +149,51 @@
       <setting name="customPortFile" value="" />
       <setting name="fixLineNumbers" value="false" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="view.Main" />
+      <module name="lab1" />
+      <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
@@ -221,7 +227,7 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -240,6 +246,8 @@
       <workItem from="1614186144659" duration="3804000" />
       <workItem from="1614620917087" duration="2195000" />
       <workItem from="1614626037729" duration="3470000" />
+      <workItem from="1614751375594" duration="1558000" />
+      <workItem from="1615055661229" duration="1654000" />
     </task>
     <task id="LOCAL-00001" summary="Best Version (Dichotomy works correctly)">
       <created>1613587669990</created>
@@ -273,20 +281,19 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
