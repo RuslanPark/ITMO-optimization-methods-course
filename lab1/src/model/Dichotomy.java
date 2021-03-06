@@ -11,8 +11,8 @@ public class Dichotomy extends CalculationMethod {
         this.epsilon = 0.0001;
     }
 
-    public Dichotomy(double delta, double epsilon) {
-        this.delta = delta;
+    public Dichotomy(double epsilon) {
+        this.delta = epsilon / 100;
         this.epsilon = epsilon;
     }
 
