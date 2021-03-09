@@ -1,40 +1,28 @@
 package controller;
 
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.*;
 
-import java.net.URL;
 import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class Controller {
 
     @FXML
     private ComboBox<String> comboMethodsBox, comboLineBox;
     @FXML
-    private Button buildButton;
-    @FXML
     private LineChart<Double, Double> lineChart;
 
     public List< Pair<Double, Double> > list;
     CalculationMethod calculationMethod = null;
+    double res = 0;
 
     @FXML
     public void initialize() {
@@ -43,6 +31,9 @@ public class Controller {
     }
 
     public void methodChosen() {
+        lineChart.getData().clear();
+        comboLineBox.getSelectionModel().clearSelection();
+
         switch (comboMethodsBox.getValue()) {
             case ("Dichotomy") -> calculationMethod = new Dichotomy();
             case ("Golden ratio") -> calculationMethod = new GoldenRatio();
@@ -54,6 +45,7 @@ public class Controller {
         OptionsMenu menu = new OptionsMenu();
         menu.showMenu();
 
+        buildGraph();
     }
 
     public void buildGraph() {
@@ -62,8 +54,9 @@ public class Controller {
         alert.setHeaderText(null);
 
         try {
+
             // Calculate plot points by chosen method
-            double res = calculationMethod.calculate();
+            res = calculationMethod.calculate();
             list = calculationMethod.getGraphPoints();
 
             // Collect points and iterations count
@@ -73,6 +66,7 @@ public class Controller {
                 lines.add(str);
             }
             comboLineBox.setItems(lines);
+
 
 
             alert.setTitle("Success!");
@@ -88,6 +82,9 @@ public class Controller {
     }
 
     public void lineChosen() {
+        if (comboLineBox.getValue() == null) {
+            return;
+        }
         int chosenLinePosition = Integer.parseInt(comboLineBox.getValue());
         Pair<Double, Double> chosenPoint = list.get(chosenLinePosition - 1);
         double a = chosenPoint.getKey();
@@ -95,6 +92,7 @@ public class Controller {
 
         // Clear chart
         lineChart.getData().clear();
+        lineChart.setCreateSymbols(false);
 
         // Add points (XYChart.Data) in special container (XYChart.Series)
         XYChart.Series<Double, Double> series = new XYChart.Series<>();
@@ -106,6 +104,14 @@ public class Controller {
         }
         // Set legend format and load container with points
         series.setName("Left X= " + chosenPoint.getKey() + "  |  Right X= " + chosenPoint.getValue());
+
+        XYChart.Series<Double, Double> seriesPoint = new XYChart.Series<>();
+        seriesPoint.getData().add(new XYChart.Data<>(res, 10 * res * Math.log(res) - res * res / 2));
+        seriesPoint.setName("Answer point is " + res);
+
         lineChart.getData().add(series);
+        lineChart.getData().add(seriesPoint);
+
+        seriesPoint.getNode().setStyle("-fx-stroke-width: 7;");
     }
 }
