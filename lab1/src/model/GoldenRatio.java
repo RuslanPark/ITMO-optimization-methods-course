@@ -2,24 +2,14 @@ package model;
 
 import javafx.util.Pair;
 
+import java.util.HashMap;
+
 public class GoldenRatio extends CalculationMethod {
     //
     final private double phi = 0.61803;
-    //
-    final private double epsilon;
-
-    public GoldenRatio() {
-        this.epsilon = 0.0001;
-    }
-
-    public GoldenRatio(double epsilon) {
-        this.epsilon = epsilon;
-    }
 
     @Override
     public double calculate() {
-        // Add first full segment under study
-        graphPoints.add(new Pair<>(left, right));
         // Init x1 and x2
         double x1 = right - phi*(right - left);
         double x2 = left + phi * (right - left);
@@ -27,6 +17,13 @@ public class GoldenRatio extends CalculationMethod {
         double y2 = calculateFunctionValue(x2);
         // Calculate until get the required accuracy
         while ((right - left) / 2 > epsilon) {
+
+            HashMap<String, Double> hashMap = new HashMap<>();
+            hashMap.put("left", left);
+            hashMap.put("right", right);
+            hashMap.put("x1", x1);
+            hashMap.put("x2", x2);
+            graphPoints.add(hashMap);
             // Checking at which point the function is smaller
             if (y1 <= y2) {
                 right = x2;
@@ -41,8 +38,6 @@ public class GoldenRatio extends CalculationMethod {
                 y1 = y2;
                 y2 = calculateFunctionValue(x2);
             }
-            // Add segment
-            graphPoints.add(new Pair<>(left, right));
         }
         // Return min function
         return (left + right) / 2;

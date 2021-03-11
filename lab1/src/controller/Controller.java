@@ -12,6 +12,7 @@ import javafx.util.Pair;
 import model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public class Controller {
 
@@ -20,7 +21,7 @@ public class Controller {
     @FXML
     private LineChart<Double, Double> lineChart;
 
-    public List< Pair<Double, Double> > list;
+    public List<Map<String, Double>> list;
     CalculationMethod calculationMethod = null;
     double res = 0;
 
@@ -86,32 +87,68 @@ public class Controller {
             return;
         }
         int chosenLinePosition = Integer.parseInt(comboLineBox.getValue());
-        Pair<Double, Double> chosenPoint = list.get(chosenLinePosition - 1);
-        double a = chosenPoint.getKey();
-        double b = chosenPoint.getValue();
+        Map<String, Double> chosenPoint = list.get(chosenLinePosition - 1);
 
         // Clear chart
         lineChart.getData().clear();
         lineChart.setCreateSymbols(false);
 
-        // Add points (XYChart.Data) in special container (XYChart.Series)
-        XYChart.Series<Double, Double> series = new XYChart.Series<>();
-        double delta = (b - a) / 100;
-        while (a < b) {
-            double result = 10 * a * Math.log(a) - a * a / 2;
-            a += delta;
-            series.getData().add(new XYChart.Data<>(a, result));
-        }
-        // Set legend format and load container with points
-        series.setName("Left X= " + chosenPoint.getKey() + "  |  Right X= " + chosenPoint.getValue());
+        double a, b;
+        a = Function.getLeft();
+        b = Function.getRight();
 
-        XYChart.Series<Double, Double> seriesPoint = new XYChart.Series<>();
-        seriesPoint.getData().add(new XYChart.Data<>(res, 10 * res * Math.log(res) - res * res / 2));
-        seriesPoint.setName("Answer point is " + res);
+        if (calculationMethod instanceof Parabolas) {
+            XYChart.Series<Double, Double> parabola = new XYChart.Series<>();
+            double delta = (b - a) / 100;
+            while (a < b) {
+                parabola.getData().add(new XYChart.Data<>(a,
+                        chosenPoint.get("a2") * (a - chosenPoint.get("x1")) * (a - chosenPoint.get("x2"))
+                                + chosenPoint.get("a1") * (a - chosenPoint.get("x1")) + chosenPoint.get("a0")));
+                a += delta;
+            }
+
+            a = Function.getLeft();
+
+            lineChart.getData().add(parabola);
+
+            parabola.getNode().setStyle("-fx-stroke-width: 7;");
+        } else {
+            a = chosenPoint.get("left");
+            b = chosenPoint.get("right");
+
+            XYChart.Series<Double, Double> x1Point = new XYChart.Series<>();
+            x1Point.getData().add(new XYChart.Data<>(chosenPoint.get("x1"), Function.calculateFunctionValue(chosenPoint.get("x1"))));
+            x1Point.setName("x1 is " + chosenPoint.get("x1"));
+
+            XYChart.Series<Double, Double> x2Point = new XYChart.Series<>();
+            x2Point.getData().add(new XYChart.Data<>(chosenPoint.get("x2"), Function.calculateFunctionValue(chosenPoint.get("x2"))));
+            x2Point.setName("x2 is " + chosenPoint.get("x2"));
+
+            lineChart.getData().add(x1Point);
+            lineChart.getData().add(x2Point);
+
+            x1Point.getNode().setStyle("-fx-stroke-width: 7;");
+            x2Point.getNode().setStyle("-fx-stroke-width: 7;");
+        }
+
+        // Add points (XYChart.Data) in special container (XYChart.Series)
+        XYChart.Series<Double, Double> series = paintGraph(a, b);
+
+        // Set legend format and load container with points
+        series.setName("Left X= " + chosenPoint.get("left") + "  |  Right X= " + chosenPoint.get("right") + " result = " + res);
 
         lineChart.getData().add(series);
-        lineChart.getData().add(seriesPoint);
+    }
 
-        seriesPoint.getNode().setStyle("-fx-stroke-width: 7;");
+    private XYChart.Series<Double, Double> paintGraph(double a, double b) {
+        XYChart.Series<Double, Double> graph = new XYChart.Series<>();
+        double delta = (b - a) / 100;
+        while (a < b) {
+            double result = Function.calculateFunctionValue(a);
+            a += delta;
+            graph.getData().add(new XYChart.Data<>(a, result));
+        }
+
+        return graph;
     }
 }
