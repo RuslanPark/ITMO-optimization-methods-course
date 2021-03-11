@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +25,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        ObservableList<String> methods = FXCollections.observableArrayList("Dichotomy", "Golden ratio", "Fibonacci", "Parabolas","Brent's");
+        ObservableList<String> methods = FXCollections.observableArrayList("Dichotomy", "Golden ratio", "Fibonacci", "Parabolas", "Brent's");
         comboMethodsBox.setItems(methods);
     }
 
@@ -45,11 +43,10 @@ public class Controller {
 
         OptionsMenu menu = new OptionsMenu();
         menu.showMenu();
-
-        buildGraph();
+        buildGraph(menu.epsilon);
     }
 
-    public void buildGraph() {
+    public void buildGraph(double epsilon) {
         // Create alert dialog for change notification
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
@@ -57,7 +54,7 @@ public class Controller {
         try {
 
             // Calculate plot points by chosen method
-            res = calculationMethod.calculate();
+            res = calculationMethod.calculate(epsilon);
             list = calculationMethod.getGraphPoints();
 
             // Collect points and iterations count
@@ -67,7 +64,6 @@ public class Controller {
                 lines.add(str);
             }
             comboLineBox.setItems(lines);
-
 
 
             alert.setTitle("Success!");
@@ -109,12 +105,25 @@ public class Controller {
 
             a = Function.getLeft();
 
-            lineChart.getData().add(parabola);
+            // Add points (XYChart.Data) in special container (XYChart.Series)
+            XYChart.Series<Double, Double> series = paintGraph(a, b);
+            // Set legend format and load container with points
+            series.setName("Left X= " + chosenPoint.get("left") + "  |  Right X= " + chosenPoint.get("right") + " result = " + res);
+            lineChart.getData().add(series);
 
-            parabola.getNode().setStyle("-fx-stroke-width: 7;");
+            lineChart.getData().add(parabola);
+            parabola.setName("Approximating parabola");
+            parabola.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+
         } else {
             a = chosenPoint.get("left");
             b = chosenPoint.get("right");
+
+            // Add points (XYChart.Data) in special container (XYChart.Series)
+            XYChart.Series<Double, Double> series = paintGraph(a, b);
+            // Set legend format and load container with points
+            series.setName("Left X= " + chosenPoint.get("left") + "  |  Right X= " + chosenPoint.get("right") + " result = " + res);
+            lineChart.getData().add(series);
 
             XYChart.Series<Double, Double> x1Point = new XYChart.Series<>();
             x1Point.getData().add(new XYChart.Data<>(chosenPoint.get("x1"), Function.calculateFunctionValue(chosenPoint.get("x1"))));
@@ -127,17 +136,10 @@ public class Controller {
             lineChart.getData().add(x1Point);
             lineChart.getData().add(x2Point);
 
-            x1Point.getNode().setStyle("-fx-stroke-width: 7;");
-            x2Point.getNode().setStyle("-fx-stroke-width: 7;");
+            x1Point.getNode().setStyle("-fx-stroke-width: 7; -fx-stroke-line-cap: round;");
+            x2Point.getNode().setStyle("-fx-stroke-width: 7; -fx-stroke-line-cap: round;");
         }
 
-        // Add points (XYChart.Data) in special container (XYChart.Series)
-        XYChart.Series<Double, Double> series = paintGraph(a, b);
-
-        // Set legend format and load container with points
-        series.setName("Left X= " + chosenPoint.get("left") + "  |  Right X= " + chosenPoint.get("right") + " result = " + res);
-
-        lineChart.getData().add(series);
     }
 
     private XYChart.Series<Double, Double> paintGraph(double a, double b) {
