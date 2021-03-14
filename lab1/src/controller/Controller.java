@@ -90,20 +90,20 @@ public class Controller {
         lineChart.setCreateSymbols(false);
 
         double a, b;
-        a = Function.getLeft();
-        b = Function.getRight();
+        a = chosenPoint.get("left");
+        b = chosenPoint.get("right");
 
         if (calculationMethod instanceof Parabolas) {
             XYChart.Series<Double, Double> parabola = new XYChart.Series<>();
             double delta = (b - a) / 100;
             while (a < b) {
                 parabola.getData().add(new XYChart.Data<>(a,
-                        chosenPoint.get("a2") * (a - chosenPoint.get("x1")) * (a - chosenPoint.get("x2"))
-                                + chosenPoint.get("a1") * (a - chosenPoint.get("x1")) + chosenPoint.get("a0")));
+                        chosenPoint.get("a2") * (a - chosenPoint.get("left")) * (a - chosenPoint.get("x2"))
+                                + chosenPoint.get("a1") * (a - chosenPoint.get("left")) + chosenPoint.get("a0")));
                 a += delta;
             }
 
-            a = Function.getLeft();
+            a = chosenPoint.get("left");
 
             // Add points (XYChart.Data) in special container (XYChart.Series)
             XYChart.Series<Double, Double> series = paintGraph(a, b);

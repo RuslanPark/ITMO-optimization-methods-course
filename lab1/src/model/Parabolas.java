@@ -6,40 +6,42 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Parabolas extends CalculationMethod {
-    private final double eps = 0.0000001;
-
     @Override
     public double calculate() {
-        // Adding full segment
+        // Initial parameters; x1 < x2 < x3
+        double x1 = left, x2 = 0.5, x3 = right;
 
-        // Initial parameters; a < b < c
-        double x1 = left, x2 = 0.3, x3 = right;
+        // Calculate function value in x1, x2, x3
+        double f1 = Function.calculateFunctionValue(x1);
+        double f2 = Function.calculateFunctionValue(x2);
+        double f3 = Function.calculateFunctionValue(x3);
 
-        // Intermediate variables
-        double f1 = calculateFunctionValue(x1);
-        double f2 = calculateFunctionValue(x2);
-        double f3 = calculateFunctionValue(x3);
-
+        // Init x_i-1, x_i and check for firstIteration
         double xPrev = 0;
-        double x;
+        double x = 0.0f;
         boolean firstIteration = true;
+
         while (true) {
+            // Calculate parabola coefficients
             double a0 = f1;
             double a1 = (f2 - f1) / (x2 - x1);
             double a2 = (((f3 - f1) / (x3 - x1)) - ((f2 - f1) / (x2 - x1))) / (x3 - x2);
+
             x = (x1 + x2 - a1 / a2) / 2;
 
-            System.out.println(a2 + " " + a1 + " " + a0);
-
+            // Add current step points for building graph
             HashMap<String, Double> hashMap = new HashMap<>();
             hashMap.put("left", x1);
             hashMap.put("right", x3);
             hashMap.put("a0", a0);
             hashMap.put("a1", a1);
             hashMap.put("a2", a2);
-            hashMap.put("x1", x1);
             hashMap.put("x2", x2);
             graphPoints.add(hashMap);
+
+            double fx = Function.calculateFunctionValue(x);
+
+            // Checking distance between points on all iterations except the first one
             if (firstIteration) {
                 firstIteration = false;
             } else if (Math.abs(x - xPrev) < epsilon) {
@@ -47,8 +49,7 @@ public class Parabolas extends CalculationMethod {
             }
             xPrev = x;
 
-            double fx = calculateFunctionValue(x);
-
+            // Init new points
             if (x1 < x && x < x2 && x2 < x3) {
                 if (fx >= f2) {
                     x1 = x;

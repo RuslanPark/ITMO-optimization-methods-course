@@ -30,7 +30,7 @@ public class Brents extends CalculationMethod {
         w = v;
         x = v;
         e = 0.0;
-        fx = calculateFunctionValue(x);
+        fx = Function.calculateFunctionValue(x);
         fv = fx;
         fw = fx;
         tol3 = tol / 3.0;
@@ -92,7 +92,7 @@ public class Brents extends CalculationMethod {
                 }
             }
 
-            fu = calculateFunctionValue(u);
+            fu = Function.calculateFunctionValue(u);
 
             // Update a, b, v, w, and x
             if (fx <= fu) {
