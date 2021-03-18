@@ -38,8 +38,6 @@ public class Brents extends CalculationMethod {
         tol1 = eps * Math.abs(x) + tol3;
         t2 = 2.0 * tol1;
 
-        HashMap<String, Double> hashMap = new HashMap<>();
-
         while (Math.abs(x - xm) > (t2 - (b - a) / 2)) {
             p = q = r = 0.0;
 
@@ -85,16 +83,20 @@ public class Brents extends CalculationMethod {
             fu = Function.calculateFunctionValue(u);
 
             // Add current step points for building graph
+            HashMap<String, Double> hashMap = new HashMap<>();
             hashMap.put("left", a);
             hashMap.put("right", b);
             hashMap.put("x", x);
             hashMap.put("u", u);
             graphPoints.add(hashMap);
-            hashMap.clear();
 
             // Update a, b, v, w, and x
             if (fu <= fx) {
-                (u < x ? b : a) = x;
+                if (u < x) {
+                    b = x;
+                } else {
+                    a = x;
+                }
 
                 v = w;
                 fv = fw;
@@ -105,7 +107,11 @@ public class Brents extends CalculationMethod {
                 x = u;
                 fx = fu;
             } else {
-                (u < x ? a : b) = u;
+                if (u < x) {
+                    a = u;
+                } else {
+                    b = u;
+                }
 
                 if ((fu <= fw) || (w == x)) {
                     v = w;
