@@ -1,6 +1,8 @@
 package model;
 
 import javafx.util.Pair;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class Brents extends CalculationMethod {
@@ -86,8 +88,8 @@ public class Brents extends CalculationMethod {
             HashMap<String, Double> hashMap = new HashMap<>();
             hashMap.put("left", a);
             hashMap.put("right", b);
-            hashMap.put("x", x);
-            hashMap.put("u", u);
+            hashMap.put("x1", x);
+            hashMap.put("x2", u);
             graphPoints.add(hashMap);
 
             // Update a, b, v, w, and x
