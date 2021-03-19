@@ -1,9 +1,6 @@
 package model;
 
-import javafx.util.Pair;
-
 import java.util.HashMap;
-import java.util.List;
 
 public class Brents extends CalculationMethod {
     @Override

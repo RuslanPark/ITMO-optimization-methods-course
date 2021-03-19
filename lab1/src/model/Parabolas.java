@@ -1,9 +1,6 @@
 package model;
 
-import javafx.util.Pair;
-
 import java.util.HashMap;
-import java.util.List;
 
 public class Parabolas extends CalculationMethod {
     @Override
@@ -18,7 +15,7 @@ public class Parabolas extends CalculationMethod {
 
         // Init x_i-1, x_i and check for firstIteration
         double xPrev = 0;
-        double x = 0.0f;
+        double x;
         boolean firstIteration = true;
 
         while (true) {

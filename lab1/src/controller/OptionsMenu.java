@@ -2,7 +2,6 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -20,7 +19,7 @@ public class OptionsMenu {
         // Create the custom dialog.
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Write parameters");
-        dialog.setHeaderText("Write parameters for method");
+        dialog.setHeaderText("Write parameters for method\nSkip to use default eps = 0.0001");
 
         // Set the button types.
         ButtonType confirmButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -46,17 +45,17 @@ public class OptionsMenu {
         // Convert the result to a username-password-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == confirmButtonType) {
-                if (epsilonTextField.getText().isEmpty()) {
+                if (epsilonTextField.getText().isEmpty() || !epsilonTextField.getText().matches("0.\\d+")) {
                     return "0.0001";
                 }
                 return epsilonTextField.getText();
             }
-            return null;
+            return "0.0001";
         });
+
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(it -> {
             epsilon = Double.parseDouble(it);
-            //System.out.println("Epsilon=" + it);
         });
     }
 }

@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.util.Pair;
 import model.*;
 
 import java.util.List;
@@ -121,14 +120,14 @@ public class Controller {
 
             // Add points (XYChart.Data) in special container (XYChart.Series)
             XYChart.Series<Double, Double> series = paintGraph(a, b);
-            // Set legend format and load container with points
             series.setName("Left X= " + chosenPoint.get("left") + "  |  Right X= " + chosenPoint.get("right") + " result = " + res);
             lineChart.getData().add(series);
 
+            // Add point X1 (XYChart.Data) in special container (XYChart.Series)
             XYChart.Series<Double, Double> x1Point = new XYChart.Series<>();
             x1Point.getData().add(new XYChart.Data<>(chosenPoint.get("x1"), Function.calculateFunctionValue(chosenPoint.get("x1"))));
             x1Point.setName("x1 is " + chosenPoint.get("x1"));
-
+            // Add point X2 (XYChart.Data) in special container (XYChart.Series)
             XYChart.Series<Double, Double> x2Point = new XYChart.Series<>();
             x2Point.getData().add(new XYChart.Data<>(chosenPoint.get("x2"), Function.calculateFunctionValue(chosenPoint.get("x2"))));
             x2Point.setName("x2 is " + chosenPoint.get("x2"));
