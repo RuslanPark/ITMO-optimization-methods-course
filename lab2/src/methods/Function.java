@@ -70,4 +70,9 @@ public class Function implements FunctionInterface {
         res = Math.sqrt(res);
         return res;
     }
+
+    @Override
+    public List<List<Double>> getMatrix() {
+        return matrix;
+    }
 }

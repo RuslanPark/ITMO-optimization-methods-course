@@ -47,4 +47,31 @@ public class DiagonalFunction implements FunctionInterface {
         res = Math.sqrt(res);
         return res;
     }
+
+    @Override
+    public List<List<Double>> getMatrix() {
+        List<List<Double>> answer = new ArrayList<>();
+
+        answer.add(new ArrayList<>());
+
+        for (int i = 0; i <= matrix.size(); i++) {
+            answer.get(0).add(0.0);
+        }
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            answer.add(new ArrayList<>());
+            answer.get(i).add(0.0);
+            for (int j = 1; j <= matrix.size(); j++)
+            {
+                if (i == j) {
+                    answer.get(i).add(matrix.get(i - 1));
+                } else {
+                    answer.get(i).add(0.0);
+                }
+            }
+        }
+
+        return answer;
+    }
 }
