@@ -4,52 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Function implements FunctionInterface{
-    private List<List<Double>> squareMatrix;
-    private List<Double> firstDegreesMatrix;
-    private double c;
+    // Function matrix. Rows and columns format {1, x1, x2, ..., xn}.
+    private List<List<Double>> matrix;
     private List<List<Double>> gradient;
-    private List<Double> gc = new ArrayList<>();
 
-    public Function(List<List<Double>> squareMatrix, List<Double> firstDegreesMatrix, double c) {
-        this.squareMatrix = squareMatrix;
-        this.firstDegreesMatrix = firstDegreesMatrix;
-        this.c = c;
+    public Function(List<List<Double>> matrix) {
+        this.matrix = matrix;
         findGradient();
     }
 
     private void findGradient() {
         gradient = new ArrayList<>();
-        for (int i = 0; i < squareMatrix.size(); ++i) {
+        for (int i = 1; i < matrix.size(); ++i) {
             List<Double> row = new ArrayList<>();
-            for (int j = 0; j < squareMatrix.size(); ++j) {
+            row.add(matrix.get(i).get(0));
+            for (int j = 1; j < matrix.size(); ++j) {
                 if (i == j) {
-                    row.add(2.0 * squareMatrix.get(i).get(j));
+                    row.add(2.0 * matrix.get(i).get(j));
                 } else {
-                    row.add(squareMatrix.get(i).get(j));
+                    row.add(matrix.get(i).get(j));
                 }
             }
             gradient.add(row);
-        }
-
-        for (int i = 0; i < firstDegreesMatrix.size(); ++i) {
-            gc.add(firstDegreesMatrix.get(i));
         }
     }
 
     @Override
     public double calculateValue(List<Double> x) {
         double result = 0;
-        for (int i = 0; i < squareMatrix.size(); ++i) {
-            for (int j = i; j < squareMatrix.size(); ++j) {
-                result += squareMatrix.get(i).get(j) * x.get(i) * x.get(j);
+        for (int i = 1; i < matrix.size(); ++i) {
+            for (int j = i; j < matrix.size(); ++j) {
+                result += matrix.get(i).get(j) * x.get(i - 1) * x.get(j - 1);
             }
         }
 
-        for (int i = 0; i < firstDegreesMatrix.size(); ++i) {
-            result += firstDegreesMatrix.get(i) * x.get(i);
+        for (int i = 1; i < matrix.size(); ++i) {
+            result += matrix.get(0).get(i) * x.get(i - 1);
         }
 
-        result += c;
+        result += matrix.get(0).get(0);
         return result;
     }
 
@@ -58,10 +51,10 @@ public class Function implements FunctionInterface{
         List<Double> result = new ArrayList<>();
         for (int i = 0; i < gradient.size(); ++i) {
             double sum = 0;
-            for (int j = 0; j < gradient.size(); ++j) {
-                sum += gradient.get(i).get(j) * x.get(j);
+            for (int j = 1; j <= gradient.size(); ++j) {
+                sum += gradient.get(i).get(j) * x.get(j - 1);
             }
-            sum += gc.get(i);
+            sum += gradient.get(i).get(0);
             result.add(sum);
         }
         return result;
@@ -69,14 +62,10 @@ public class Function implements FunctionInterface{
 
     @Override
     public double calculateGradientNorm(List<Double> x) {
+        List<Double> grad = calculateGradient(x);
         double res = 0;
-        for (int i = 0; i < gradient.size(); ++i) {
-            double row = 0;
-            for (int j = 0; j < gradient.size(); ++j) {
-                row += gradient.get(i).get(j) * x.get(j);
-            }
-            row += gc.get(i);
-            res += row * row;
+        for (int i = 0; i < grad.size(); ++i) {
+            res += grad.get(i) * grad.get(i);
         }
         res = Math.sqrt(res);
         return res;

@@ -6,6 +6,7 @@ import java.util.List;
 public class GradientDescent extends AbstractMethod{
     @Override
     List<Double> calculate() {
+        points.add(x);
         double fx = function.calculateValue(x);
         while (function.calculateGradientNorm(x) >= epsilon) {
             while(true) {
@@ -13,6 +14,7 @@ public class GradientDescent extends AbstractMethod{
                 double fy = function.calculateValue(y);
                 if (fy < fx) {
                     x = y;
+                    points.add(x);
                     fx = fy;
                     break;
                 } else {
@@ -25,9 +27,10 @@ public class GradientDescent extends AbstractMethod{
 
     private List<Double> calculateNewPoint() {
         List<Double> grad = function.calculateGradient(x);
+        double normGrad = function.calculateGradientNorm(x);
         List<Double> res = new ArrayList<>();
         for (int i = 0; i < x.size(); ++i) {
-            res.add(x.get(i) - alpha * grad.get(i));
+            res.add(x.get(i) - alpha * grad.get(i) / normGrad);
         }
         return res;
     }

@@ -8,6 +8,7 @@ abstract public class AbstractMethod {
     protected List<Double> x = new ArrayList<>();
     protected double alpha = 1;
     protected FunctionInterface function;
+    protected List<List<Double>> points = new ArrayList<>();
 
     abstract List<Double> calculate();
     public List<Double> calculate(List<Double> x, double epsilon, FunctionInterface function) {
@@ -15,5 +16,9 @@ abstract public class AbstractMethod {
         this.epsilon = epsilon;
         this.function = function;
         return calculate();
+    }
+
+    public List<List<Double>> getPoints() {
+        return points;
     }
 }
