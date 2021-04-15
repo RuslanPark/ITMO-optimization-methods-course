@@ -3,7 +3,7 @@ package methods;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Function implements FunctionInterface{
+public class Function implements FunctionInterface {
     // Function matrix. Rows and columns format {1, x1, x2, ..., xn}.
     private List<List<Double>> matrix;
     private List<List<Double>> gradient;

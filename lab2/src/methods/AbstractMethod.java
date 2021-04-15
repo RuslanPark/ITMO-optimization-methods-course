@@ -2,6 +2,8 @@ package methods;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 abstract public class AbstractMethod {
     protected double epsilon = 0.0001;
@@ -20,5 +22,18 @@ abstract public class AbstractMethod {
 
     public List<List<Double>> getPoints() {
         return points;
+    }
+
+    protected List<Double> multiplyByConstant(List<Double> elements, Double m) {
+        return elements.stream().map(x -> m * x).collect(Collectors.toList());
+    }
+
+    protected List<Double> subtract(List<Double> a, List<Double> b) {
+        List<Double> answer = new ArrayList<>();
+        for (int i = 0; i < a.size(); ++i) {
+            answer.add(a.get(i) - b.get(i));
+        }
+
+        return answer;
     }
 }
