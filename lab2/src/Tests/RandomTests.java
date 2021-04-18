@@ -10,8 +10,8 @@ import java.util.*;
 public class RandomTests {
     public static void main(String[] args) {
         Random random = new Random();
-        for (int n = 10; n <= 10000; n *= 10) {
-            for (int k = 1; k < 2000; k += 100) {
+        for (int n = 10; n <= 100; n *= 10) {
+            for (int k = 1; k < 20; k += 1) {
                 AbstractMethod method = new GradientDescent();
                 List<Double> matrix = new ArrayList<>();
                 List<Double> startPoint = new ArrayList<>(Collections.nCopies(n, 1.0));

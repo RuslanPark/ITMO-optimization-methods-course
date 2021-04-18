@@ -3,7 +3,25 @@ package methods;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.sqrt;
+
 public class Function implements FunctionInterface {
+
+    public static List<List<Double>>  funcOneMatrix = List.of(List.of(13.0, -10.0, 30.0),
+            List.of(-10.0, 64.0, 126.0),
+            List.of(30.0, 126.0, 64.0)
+    );
+
+    public static double funcOneSqrt(double y, double z) {
+        return 64 * z - 127 * y * y -2550 * y - 807;
+    }
+    public static double funcOneXFirst(double y, double z) {
+        return (-sqrt(funcOneSqrt(y, z)) - 63 * y + 5) / 64;
+    }
+    public static double funcOneXSecond(double y, double z) {
+        return (sqrt(funcOneSqrt(y, z)) - 63 * y + 5) / 64;
+    }
+
     // Function matrix. Rows and columns format {1, x1, x2, ..., xn}.
     private List<List<Double>> matrix;
     private List<List<Double>> gradient;
