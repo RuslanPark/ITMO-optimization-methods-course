@@ -9,7 +9,7 @@ public class SteepestDescent extends AbstractMethod {
 
         while (function.calculateGradientNorm(x) >= epsilon) {
             alpha = OneDimensionalMethods.dichotomy(c->{
-                return function.calculateValue(subtract(x, multiplyByConstant(function.calculateGradient(x), c)));
+                         return function.calculateValue(subtract(x, multiplyByConstant(function.calculateGradient(x), c)));
                     });
 
             x = subtract(x, multiplyByConstant(function.calculateGradient(x),

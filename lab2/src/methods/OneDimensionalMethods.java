@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public class OneDimensionalMethods {
-    private static final double left = 0.1;
-    private static final double right = 2.5;
+    private static final double left = 0.0;
+    private static final double right = 1.0;
 
     private static final double epsilon = 0.0001;
 

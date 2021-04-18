@@ -8,10 +8,11 @@ public class ConjugateGradients extends AbstractMethod {
     List<Double> calculate() {
         points.add(x);
 
-        List<Double> gradient = function.calculateGradient(x);
-        List<Double> p = multiplyByConstant(gradient, -1.0), t, ap;
-
+        List<Double> gradient, p, t, ap;
         Double a;
+
+        gradient = function.calculateGradient(x);
+        p = multiplyByConstant(function.calculateGradient(x), -1.0);
 
         while (function.calculateGradientNorm(x) >= epsilon) {
             ap = product(function.getMatrix(), p);
@@ -30,7 +31,7 @@ public class ConjugateGradients extends AbstractMethod {
         return x;
     }
 
-    public List<Double> product(List<List<Double>> matrix, List<Double> vector) {
+    private List<Double> product(List<List<Double>> matrix, List<Double> vector) {
         List<Double> answer = new ArrayList<>();
 
         Double t;
