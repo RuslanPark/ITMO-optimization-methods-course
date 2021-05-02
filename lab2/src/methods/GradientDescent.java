@@ -5,17 +5,21 @@ import java.util.List;
 public class GradientDescent extends AbstractMethod {
     @Override
     List<Double> calculate() {
-        points.add(x);
+        //Add x_0 in list
+        writePoint(x);
+        //Calculate function value in point x_0
         double fx = function.calculateValue(x);
-        while (function.calculateGradientNorm(x) >= epsilon) {
+        double functionGradientNorm = function.calculateGradientNorm(x);
+        while (functionGradientNorm >= epsilon) {
             while(true) {
                 List<Double> y = subtract(x, multiplyByConstant(function.calculateGradient(x),
-                                                            alpha / function.calculateGradientNorm(x)));
+                                                            alpha / functionGradientNorm));
                 double fy = function.calculateValue(y);
                 if (fy < fx) {
                     x = y;
-                    points.add(x);
+                    writePoint(x);
                     fx = fy;
+                    functionGradientNorm = function.calculateGradientNorm(x);
                     break;
                 } else {
                     alpha /= 2;

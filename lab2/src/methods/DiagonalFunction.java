@@ -40,9 +40,8 @@ public class DiagonalFunction implements FunctionInterface {
     @Override
     public double calculateGradientNorm(List<Double> x) {
         double res = 0;
-        List<Double> grad = calculateGradient(x);
-        for (int i = 0; i < grad.size(); ++i) {
-            res += grad.get(i) * grad.get(i);
+        for (int i = 0; i < gradient.size(); ++i) {
+            res += Math.pow(gradient.get(i) * x.get(i), 2);
         }
         res = Math.sqrt(res);
         return res;

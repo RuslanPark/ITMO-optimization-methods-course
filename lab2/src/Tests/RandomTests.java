@@ -1,18 +1,16 @@
 package Tests;
 
-import methods.AbstractMethod;
-import methods.DiagonalFunction;
-import methods.FunctionInterface;
-import methods.GradientDescent;
+import methods.*;
 
 import java.util.*;
 
 public class RandomTests {
     public static void main(String[] args) {
         Random random = new Random();
-        for (int n = 10; n <= 100; n *= 10) {
-            for (int k = 1; k < 20; k += 1) {
+        for (int n = 10; n <= 10000; n *= 10) {
+            for (int k = 1; k <= 1001; k += 100) {
                 AbstractMethod method = new GradientDescent();
+                method.disablePointsWriting();
                 List<Double> matrix = new ArrayList<>();
                 List<Double> startPoint = new ArrayList<>(Collections.nCopies(n, 1.0));
                 matrix.add(1.0);
@@ -23,8 +21,7 @@ public class RandomTests {
                 matrix.sort(Comparator.naturalOrder());
                 FunctionInterface function = new DiagonalFunction(matrix);
                 method.calculate(startPoint, 0.0001, function);
-                List<List<Double>> points = method.getPoints();
-                System.out.println(points.size());
+                System.out.println(method.getIterationsCount());
             }
             System.out.println("-----------------");
         }

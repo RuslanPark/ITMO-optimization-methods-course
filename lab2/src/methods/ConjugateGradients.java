@@ -6,7 +6,7 @@ import java.util.List;
 public class ConjugateGradients extends AbstractMethod {
     @Override
     List<Double> calculate() {
-        points.add(x);
+        writePoint(x);
 
         List<Double> gradient, p, t, ap;
         Double a;
@@ -20,7 +20,7 @@ public class ConjugateGradients extends AbstractMethod {
             a = dotProduct(gradient, gradient) / dotProduct(ap, p);
 
             x = add(x, multiplyByConstant(p, a));
-            points.add(x);
+            writePoint(x);
 
             t = gradient;
             gradient = add(gradient, multiplyByConstant(ap, a));

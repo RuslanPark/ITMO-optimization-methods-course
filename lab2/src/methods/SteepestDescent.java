@@ -5,17 +5,18 @@ import java.util.List;
 public class SteepestDescent extends AbstractMethod {
     @Override
     List<Double> calculate() {
-        points.add(x);
+        writePoint(x);
 
         while (function.calculateGradientNorm(x) >= epsilon) {
-            alpha = OneDimensionalMethods.dichotomy(c->{
-                         return function.calculateValue(subtract(x, multiplyByConstant(function.calculateGradient(x), c)));
-                    });
+            List<Double> functionGradient = function.calculateGradient(x);
+            alpha = OneDimensionalMethods.brents(c->
+                         function.calculateValue(subtract(x, multiplyByConstant(functionGradient, c)))
+                    );
 
-            x = subtract(x, multiplyByConstant(function.calculateGradient(x),
+            x = subtract(x, multiplyByConstant(functionGradient,
                     alpha));
 
-            points.add(x);
+            writePoint(x);
         }
 
         return x;
