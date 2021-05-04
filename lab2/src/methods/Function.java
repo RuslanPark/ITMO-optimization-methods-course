@@ -2,6 +2,7 @@ package methods;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.sqrt;
 
@@ -92,5 +93,41 @@ public class Function implements FunctionInterface {
     @Override
     public List<List<Double>> getMatrix() {
         return matrix;
+    }
+
+    @Override
+    public double getAlpha() {
+        double min = IntStream.range(1, matrix.size())
+                .mapToDouble(index -> matrix.get(index).get(index))
+                .min()
+                .orElseThrow();
+        double max = IntStream.range(0, matrix.size())
+                .mapToDouble(index -> matrix.get(index).get(index))
+                .max()
+                .orElseThrow();
+        return 2 / (min + max);
+    }
+
+    @Override
+    public List<Double> multiplyOnVector(List<Double> p) {
+        List<Double> answer = new ArrayList<>();
+        for (int i = 1; i < matrix.size(); ++i) {
+            double sum = 0;
+            for (int j = 1; j < matrix.size(); ++j) {
+                sum += matrix.get(i).get(j) * p.get(j - 1);
+                if (i == j) sum += matrix.get(i).get(j) * p.get(j - 1);
+            }
+            answer.add(sum);
+        }
+        return answer;
+    }
+
+    @Override
+    public List<Double> getB() {
+        List<Double> answer = new ArrayList<>();
+        for (int i = 1; i < matrix.size(); ++i) {
+            answer.add(matrix.get(0).get(i));
+        }
+        return answer;
     }
 }

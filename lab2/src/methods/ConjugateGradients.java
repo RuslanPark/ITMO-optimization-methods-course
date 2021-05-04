@@ -8,46 +8,37 @@ public class ConjugateGradients extends AbstractMethod {
     List<Double> calculate() {
         writePoint(x);
 
-        List<Double> gradient, p, t, ap;
-        Double a;
+        List<Double> gradient, p, ap;
 
-        gradient = function.calculateGradient(x);
-        p = multiplyByConstant(function.calculateGradient(x), -1.0);
+        gradient = add(function.multiplyOnVector(x), function.getB());
+        p = multiplyByConstant(gradient, -1.0);
 
-        while (function.calculateGradientNorm(x) >= epsilon) {
-            ap = product(function.getMatrix(), p);
+        double gradientNorm = 0.0;
+        for (Double aDouble : gradient) {
+            gradientNorm += aDouble * aDouble;
+        }
+        gradientNorm = Math.sqrt(gradientNorm);
+        while (gradientNorm >= epsilon) {
+            ap = function.multiplyOnVector(p);
+            alpha = gradientNorm * gradientNorm / dotProduct(ap, p);
 
-            a = dotProduct(gradient, gradient) / dotProduct(ap, p);
-
-            x = add(x, multiplyByConstant(p, a));
+            x = add(x, multiplyByConstant(p, alpha));
             writePoint(x);
 
-            t = gradient;
-            gradient = add(gradient, multiplyByConstant(ap, a));
+            List<Double> newGradient = add(gradient, multiplyByConstant(ap, alpha));
+            double newGradientNorm = 0.0;
+            for (Double aDouble : newGradient) {
+                newGradientNorm += aDouble * aDouble;
+            }
+            newGradientNorm = Math.sqrt(newGradientNorm);
 
-            p = subtract(multiplyByConstant(p, dotProduct(gradient, gradient) / dotProduct(t, t)), gradient);
+            double beta = newGradientNorm * newGradientNorm / (gradientNorm * gradientNorm);
+            p = subtract(multiplyByConstant(p, beta), newGradient);
+            gradient = newGradient;
+            gradientNorm = newGradientNorm;
         }
 
         return x;
-    }
-
-    private List<Double> product(List<List<Double>> matrix, List<Double> vector) {
-        List<Double> answer = new ArrayList<>();
-
-        Double t;
-
-        for (int i = 1; i < matrix.size(); i++)
-        {
-            t = 0.0;
-
-            for (int j = 1; j < matrix.size(); j++)
-            {
-                t += matrix.get(i).get(j) * vector.get(j - 1);
-            }
-            answer.add(t);
-        }
-
-        return answer;
     }
 
     private Double dotProduct(List<Double> a, List<Double> b) {

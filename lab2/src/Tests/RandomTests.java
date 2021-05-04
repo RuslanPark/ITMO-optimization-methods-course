@@ -9,7 +9,7 @@ public class RandomTests {
         Random random = new Random();
         for (int n = 10; n <= 10000; n *= 10) {
             for (int k = 1; k <= 1001; k += 100) {
-                AbstractMethod method = new GradientDescent();
+                AbstractMethod method = new ConjugateGradients();
                 method.disablePointsWriting();
                 List<Double> matrix = new ArrayList<>();
                 List<Double> startPoint = new ArrayList<>(Collections.nCopies(n, 1.0));

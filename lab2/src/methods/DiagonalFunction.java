@@ -1,7 +1,9 @@
 package methods;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class DiagonalFunction implements FunctionInterface {
     private List<Double> matrix;
@@ -72,5 +74,33 @@ public class DiagonalFunction implements FunctionInterface {
         }
 
         return answer;
+    }
+
+    @Override
+    public double getAlpha() {
+        double min = IntStream.range(0, matrix.size())
+                .mapToDouble(index -> matrix.get(index))
+                .min()
+                .orElseThrow();
+        double max = IntStream.range(0, matrix.size())
+                .mapToDouble(index -> matrix.get(index))
+                .max()
+                .orElseThrow();
+        return 2 / (min + max);
+    }
+
+    @Override
+    public List<Double> multiplyOnVector(List<Double> p) {
+        List<Double> answer = new ArrayList<>();
+        for (int i = 0; i < matrix.size(); ++i) {
+            answer.add(2 * matrix.get(i) * p.get(i));
+        }
+
+        return answer;
+    }
+
+    @Override
+    public List<Double> getB() {
+        return new ArrayList<Double>(Collections.nCopies(matrix.size(), 0.0));
     }
 }

@@ -11,4 +11,7 @@ public interface FunctionInterface {
     List<Double> calculateGradient(List<Double> x);
     //Returns function matrix
     List<List<Double>> getMatrix();
+    double getAlpha();
+    List<Double> multiplyOnVector(List<Double> p);
+    List<Double> getB();
 }
