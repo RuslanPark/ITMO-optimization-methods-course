@@ -8,19 +8,71 @@ import static java.lang.Math.sqrt;
 
 public class Function implements FunctionInterface {
 
-    public static List<List<Double>>  funcOneMatrix = List.of(List.of(13.0, -10.0, 30.0),
-            List.of(-10.0, 64.0, 126.0),
-            List.of(30.0, 126.0, 64.0)
-    );
+    public static List<List<Double>> funcMatrix(String chose) {
+        switch (chose) {
+            case ("first") -> {
+                return List.of(
+                        List.of(13.0, -10.0, 30.0),
+                        List.of(-10.0, 64.0, 126.0),
+                        List.of(30.0, 126.0, 64.0)
+                );
+            }
+            case ("second") -> {
+                return List.of(
+                        List.of(13.0, -10.0, 30.0),
+                        List.of(-10.0, 64.0, 126.0),
+                        List.of(30.0, 126.0, 64.0)
+                );
+            }
+            default -> {
+                return List.of(
+                        List.of(13.0, -10.0, 30.0),
+                        List.of(-10.0, 64.0, 126.0),
+                        List.of(30.0, 126.0, 64.0)
+                );
+            }
+        }
+    }
 
-    public static double funcOneSqrt(double y, double z) {
-        return 64 * z - 127 * y * y -2550 * y - 807;
+    public static double funcSqrt(String chose, double y, double z) {
+        switch (chose) {
+            case ("first") -> {
+                return 64 * z - 127 * y * y -2550 * y - 807;
+            }
+            case ("second") -> {
+                return 64 * z - 127 * y * y -2550 * y - 807;
+            }
+            default -> {
+                return 64 * z - 127 * y * y -2550 * y - 807;
+            }
+        }
     }
-    public static double funcOneXFirst(double y, double z) {
-        return (-sqrt(funcOneSqrt(y, z)) - 63 * y + 5) / 64;
+    public static double funcXFirst(String chose, double y, double z) {
+
+        switch (chose) {
+            case ("first") -> {
+                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+            case ("second") -> {
+                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+            default -> {
+                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+        }
     }
-    public static double funcOneXSecond(double y, double z) {
-        return (sqrt(funcOneSqrt(y, z)) - 63 * y + 5) / 64;
+    public static double funcXSecond(String chose, double y, double z) {
+        switch (chose) {
+            case ("first") -> {
+                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+            case ("second") -> {
+                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+            default -> {
+                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
+        }
     }
 
     // Function matrix. Rows and columns format {1, x1, x2, ..., xn}.

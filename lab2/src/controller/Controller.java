@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -13,10 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.Pair;
 import methods.*;
-
 import java.util.*;
-
-import static java.lang.Math.sqrt;
 
 public class Controller {
 
@@ -25,12 +21,14 @@ public class Controller {
     @FXML
     private LineChart<Number, Number> lineChart;
 
-    AbstractMethod method = null;
+    private String func = null;
+    private AbstractMethod method = null;
     int total;
     double zoom = 1.0;
 
     @FXML
     public void initialize() {
+        lineChart.setLegendVisible(false);
         final NumberAxis axisX = (NumberAxis) lineChart.getXAxis();
         final double lowerX = axisX.getLowerBound();
         final double upperX = axisX.getUpperBound();
@@ -111,11 +109,25 @@ public class Controller {
     public void functionChosen() {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
+        switch (comboFunctionsBox.getValue()) {
+            case ("F1") -> func = "first";
+            case ("F2") -> func = "second";
+            default -> func = "third";
+        }
     }
 
     public void methodChosen() {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
+
+        if (func == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Error!");
+            alert.setContentText("Chose a function before you can chose calculation method!");
+            alert.showAndWait();
+            return;
+        }
 
         for (int j = -200; j < 100; j += 10) {
             XYChart.Series<Number, Number> graph = new XYChart.Series<>();
@@ -124,10 +136,10 @@ public class Controller {
             for (double i = -30.0; i < 30.0; i += 0.1) {
                 double z = j;
                 double y = i;
-                double sq = Function.funcOneSqrt(y, z);
+                double sq = Function.funcSqrt(func, y, z);
                 if (sq >= 0) {
-                    double x1 = Function.funcOneXFirst(y, z);
-                    double x2 = Function.funcOneXSecond(y, z);
+                    double x1 = Function.funcXFirst(func, y, z);
+                    double x2 = Function.funcXSecond(func, y, z);
                     //System.out.println(y + " " + x1 + " " + x2);
                     arrayList1.add(new Pair<>(x1, y));
                     arrayList2.add(new Pair<>(x2, y));
@@ -157,7 +169,7 @@ public class Controller {
 
     public void buildGraph(double epsilon) {
 
-        List<List<Double>> matrix = Function.funcOneMatrix;
+        List<List<Double>> matrix = Function.funcMatrix(func);
         List<Double> startPoint = List.of(1.0, 1.0);
 
         Function function = new Function(matrix);
