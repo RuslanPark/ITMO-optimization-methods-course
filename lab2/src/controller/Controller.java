@@ -9,6 +9,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.Pair;
 import methods.*;
@@ -16,6 +17,8 @@ import java.util.*;
 
 public class Controller {
 
+    @FXML
+    private RadioButton lines, axis;
     @FXML
     private ComboBox<String> comboFunctionsBox, comboMethodsBox, comboLineBox;
     @FXML
@@ -35,6 +38,18 @@ public class Controller {
         final NumberAxis axisY = (NumberAxis) lineChart.getYAxis();
         final double lowerY = axisY.getLowerBound();
         final double upperY = axisY.getUpperBound();
+
+        lines.setOnAction(event -> {
+            if (lines.isSelected()) {
+                paintLine();
+            } else {
+                deleteLine();
+            }
+        });
+
+        axis.setOnAction(event -> {
+            lineChart.getXAxis().setTickLabelsVisible(lines.isSelected());
+        });
 
         lineChart.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
@@ -109,6 +124,7 @@ public class Controller {
     public void functionChosen() {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
+        lines.setSelected(false);
         switch (comboFunctionsBox.getValue()) {
             case ("F1") -> func = "first";
             case ("F2") -> func = "second";
@@ -119,6 +135,7 @@ public class Controller {
     public void methodChosen() {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
+        lines.setSelected(false);
 
         if (func == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -129,33 +146,8 @@ public class Controller {
             return;
         }
 
-        for (int j = -200; j < 100; j += 10) {
-            XYChart.Series<Number, Number> graph = new XYChart.Series<>();
-            ArrayList<Pair<Double, Double>> arrayList1 = new ArrayList<>();
-            ArrayList<Pair<Double, Double>> arrayList2 = new ArrayList<>();
-            for (double i = -30.0; i < 30.0; i += 0.1) {
-                double z = j;
-                double y = i;
-                double sq = Function.funcSqrt(func, y, z);
-                if (sq >= 0) {
-                    double x1 = Function.funcXFirst(func, y, z);
-                    double x2 = Function.funcXSecond(func, y, z);
-                    //System.out.println(y + " " + x1 + " " + x2);
-                    arrayList1.add(new Pair<>(x1, y));
-                    arrayList2.add(new Pair<>(x2, y));
-                }
-            }
-            for (Pair<Double, Double> i : arrayList1) {
-                graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
-            }
-            for (int i = arrayList2.size() - 1; i > 0; --i) {
-                Pair<Double, Double> p = arrayList2.get(i);
-                graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
-            }
-            lineChart.getData().add(graph);
-            graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
-        }
-        total = lineChart.getData().size();
+        paintLine();
+        lines.setSelected(true);
 
         switch (comboMethodsBox.getValue()) {
             case ("GradientDescent") -> method = new GradientDescent();
@@ -212,5 +204,41 @@ public class Controller {
         }
         graph.setName(null);
         lineChart.getData().add(graph);
+    }
+
+    public void paintLine() {
+        for (int j = -200; j < 100; j += 10) {
+            XYChart.Series<Number, Number> graph = new XYChart.Series<>();
+            ArrayList<Pair<Double, Double>> arrayList1 = new ArrayList<>();
+            ArrayList<Pair<Double, Double>> arrayList2 = new ArrayList<>();
+            for (double i = -30.0; i < 30.0; i += 0.1) {
+                double z = j;
+                double y = i;
+                double sq = Function.funcSqrt(func, y, z);
+                if (sq >= 0) {
+                    double x1 = Function.funcXFirst(func, y, z);
+                    double x2 = Function.funcXSecond(func, y, z);
+                    //System.out.println(y + " " + x1 + " " + x2);
+                    arrayList1.add(new Pair<>(x1, y));
+                    arrayList2.add(new Pair<>(x2, y));
+                }
+            }
+            for (Pair<Double, Double> i : arrayList1) {
+                graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
+            }
+            for (int i = arrayList2.size() - 1; i > 0; --i) {
+                Pair<Double, Double> p = arrayList2.get(i);
+                graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
+            }
+            lineChart.getData().add(0, graph);
+            graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+        }
+        total = lineChart.getData().size();
+    }
+
+    public void deleteLine() {
+        if (total > 0) {
+            lineChart.getData().subList(0, total).clear();
+        }
     }
 }
