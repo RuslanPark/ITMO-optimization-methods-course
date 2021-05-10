@@ -40,15 +40,32 @@ public class Controller {
         final double upperY = axisY.getUpperBound();
 
         lines.setOnAction(event -> {
-            if (lines.isSelected()) {
-                paintLine();
-            } else {
-                deleteLine();
+            if (!lineChart.getData().isEmpty()) {
+                if (lines.isSelected()) {
+                    paintLine();
+                    if (comboLineBox.getSelectionModel().getSelectedIndex() != 0) {
+                        lineChosen();
+                    }
+                } else {
+                    deleteLine();
+                }
             }
         });
 
         axis.setOnAction(event -> {
-            lineChart.getXAxis().setTickLabelsVisible(lines.isSelected());
+            if (!lineChart.getData().isEmpty()) {
+                if (axis.isSelected()) {
+                    lineChart.getXAxis().setTickLabelsVisible(true);
+                    lineChart.getYAxis().setTickLabelsVisible(true);
+                    lineChart.getXAxis().setTickMarkVisible(true);
+                    lineChart.getYAxis().setTickMarkVisible(true);
+                } else {
+                    lineChart.getXAxis().setTickLabelsVisible(false);
+                    lineChart.getYAxis().setTickLabelsVisible(false);
+                    lineChart.getXAxis().setTickMarkVisible(false);
+                    lineChart.getYAxis().setTickMarkVisible(false);
+                }
+            }
         });
 
         lineChart.setOnScroll(new EventHandler<ScrollEvent>() {
@@ -125,6 +142,7 @@ public class Controller {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
         lines.setSelected(false);
+        axis.setSelected(false);
         switch (comboFunctionsBox.getValue()) {
             case ("F1") -> func = "first";
             case ("F2") -> func = "second";
@@ -136,6 +154,7 @@ public class Controller {
         lineChart.getData().clear();
         comboLineBox.getSelectionModel().clearSelection();
         lines.setSelected(false);
+        axis.setSelected(false);
 
         if (func == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -148,6 +167,7 @@ public class Controller {
 
         paintLine();
         lines.setSelected(true);
+        axis.setSelected(true);
 
         switch (comboMethodsBox.getValue()) {
             case ("GradientDescent") -> method = new GradientDescent();
@@ -194,7 +214,7 @@ public class Controller {
     }
 
     public void lineChosen() {
-        lineChart.getData().remove(total - 1, lineChart.getData().size());
+        lineChart.getData().remove(total, lineChart.getData().size());
 
         int cnt = comboLineBox.getSelectionModel().getSelectedIndex() + 1;
         XYChart.Series<Number, Number> graph = new XYChart.Series<>();
@@ -238,7 +258,8 @@ public class Controller {
 
     public void deleteLine() {
         if (total > 0) {
-            lineChart.getData().subList(0, total).clear();
+            lineChart.getData().subList(0, total - 1).clear();
+            total = 0;
         }
     }
 }
