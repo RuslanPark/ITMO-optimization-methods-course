@@ -58,7 +58,7 @@ public class MatrixGenerator {
         List<Integer> ia = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
             boolean wasInL = false;
-            ia.add(al.size() + 1);
+            ia.add(al.size());
             for (int j = 0; j < i; ++j) {
                 if (matrix.get(i).get(j) != 0 || wasInL) {
                     wasInL = true;
@@ -67,7 +67,7 @@ public class MatrixGenerator {
                 }
             }
         }
-        ia.add(al.size() + 1);
+        ia.add(al.size());
 
         Path path = Path.of(directory);
         try {
