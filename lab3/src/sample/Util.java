@@ -28,11 +28,12 @@ public class Util {
     public static <T> void writeFile(String directory, String filename, List<T> list) {
         Path filePath = Path.of(directory, filename);
         try(final BufferedWriter fileWriter = Files.newBufferedWriter(filePath)) {
-            for (int i = 0; i < list.size(); ++i) {
-                fileWriter.write(list.get(i) + " ");
+            for (T element : list) {
+                fileWriter.write(element + " ");
             }
         } catch (IOException e) {
             System.err.println("Error while writing file " + filename);
+            System.err.println(e.getMessage());
         }
     }
 }

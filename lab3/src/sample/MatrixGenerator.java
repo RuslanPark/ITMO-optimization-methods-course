@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Random;
 
 public class MatrixGenerator {
-    public static void task2Generator(String directory, int n, int k) {
+    private ProfileMatrix task2Matrix;
+    double task2Sum;
+    private List<Double> task2F;
+    public void task2Generate(String directory, int n, int k) {
         List<Integer> x = new ArrayList<>();
         for (int i = 1; i <= n; ++i) {
             x.add(i);
@@ -43,62 +46,28 @@ public class MatrixGenerator {
         }
 
         sum = -sum;
-        List<Double> di = new ArrayList<>();
-        di.add(sum + Math.pow(10, -k));
-        matrix.get(0).set(0, di.get(0));
-        for (int i = 1; i < n; ++i) {
+        task2Sum = sum;
+
+        matrix.get(0).set(0, sum + Math.pow(10, -k));
+        for (int i = 1; i < matrix.size(); ++i) {
             matrix.get(i).set(i, sum);
-            di.add(sum);
         }
+        task2Matrix = new ProfileMatrix(matrix);
+        task2Matrix.writeMatrix(directory);
 
-        List<Double> al = new ArrayList<>();
-        List<Double> au = new ArrayList<>();
-        List<Integer> ia = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            boolean wasInL = false;
-            ia.add(al.size());
-            for (int j = 0; j < i; ++j) {
-                if (matrix.get(i).get(j) != 0 || wasInL) {
-                    wasInL = true;
-                    al.add(matrix.get(i).get(j));
-                    au.add(matrix.get(j).get(i));
-                }
-            }
-        }
-        ia.add(al.size());
-
-        Path path = Path.of(directory);
-        try {
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
-            }
-        } catch (IOException e) {
-            System.err.println("Can't create directory");
-            return;
-        }
-        Util.writeFile(directory, "di.txt", di);
-        Util.writeFile(directory, "al.txt", al);
-        Util.writeFile(directory, "au.txt", au);
-        Util.writeFile(directory, "ia.txt", ia);
+        task2F = multiplyMatrixOnVector(matrix, x);
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
-        writeMatrix(directory, "matrix.txt", matrix);//For debug only
     }
 
-    private static void writeMatrix(String directory, String filename, List<List<Double>> matrix) {//Only for debug
-        Path filePath = Path.of(directory, filename);
-        try(final BufferedWriter fileWriter = Files.newBufferedWriter(filePath)) {
-            for (int i = 0; i < matrix.size(); ++i) {
-                for (int j = 0; j < matrix.size(); ++j) {
-                    fileWriter.write(matrix.get(i).get(j) + " ");
-                }
-                fileWriter.write(String.format("%n"));
-            }
-        } catch (IOException e) {
-            System.err.println("Error while writing file " + filename);
-        }
+    public void task2Regenerate(int k, String directory) {
+        double oldValue = task2Matrix.get(0, 0);
+        task2Matrix.set(0, 0, task2Sum + Math.pow(10, -k));
+        task2Matrix.writeMatrix(directory);
+        task2F.set(0, task2F.get(0) - oldValue + task2Matrix.get(0, 0));
+        Util.writeFile(directory, "f.txt", task2F);
     }
 
-    private static List<Double> multiplyMatrixOnVector(List<List<Double>> matrix, List<Integer> vector) {
+    private List<Double> multiplyMatrixOnVector(List<List<Double>> matrix, List<Integer> vector) {
         List<Double> res = new ArrayList<>();
         for (int i = 0; i < matrix.size(); ++i) {
             double sum = 0;
@@ -110,7 +79,7 @@ public class MatrixGenerator {
         return res;
     }
 
-    public static void task3Generate(String directory, int n) {
+    public void task3Generate(String directory, int n) {
         List<Integer> x = new ArrayList<>();
         for (int i = 1; i <= n; ++i) {
             x.add(i);
@@ -157,6 +126,5 @@ public class MatrixGenerator {
         Util.writeFile(directory, "au.txt", au);
         Util.writeFile(directory, "ia.txt", ia);
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
-        writeMatrix(directory, "matrix.txt", matrix);//For debug only
     }
 }

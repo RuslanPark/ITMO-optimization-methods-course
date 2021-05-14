@@ -1,23 +1,49 @@
 package sample;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProffilMatrix {
-    private List<Double> di;
-    private List<Double> al;
-    private List<Double> au;
-    private List<Integer> ia;
-    private List<Integer> swaps;
+public class ProfileMatrix {
+    private final List<Double> di;
+    private final List<Double> al;
+    private final List<Double> au;
+    private final List<Integer> ia;
+    private final List<Integer> swaps;
 
-    public void readMatrix(String directory) {
+    public ProfileMatrix(List<List<Double>> matrix) {
+        di = new ArrayList<>();
+        for (int i = 0; i < matrix.size(); ++i) {
+            di.add(matrix.get(i).get(i));
+        }
+
+        al = new ArrayList<>();
+        au = new ArrayList<>();
+        ia = new ArrayList<>();
+        for (int i = 0; i < matrix.size(); ++i) {
+            boolean wasInL = false;
+            ia.add(al.size());
+            for (int j = 0; j < i; ++j) {
+                if (matrix.get(i).get(j) != 0 || wasInL) {
+                    wasInL = true;
+                    al.add(matrix.get(i).get(j));
+                    au.add(matrix.get(j).get(i));
+                }
+            }
+        }
+        ia.add(al.size());
+
+        swaps = new ArrayList<>();
+        for (int i = 0; i < di.size(); ++i) {
+            swaps.add(i);
+        }
+    }
+
+    public ProfileMatrix(String directory) {
         di = Util.readFile(directory, "di.txt");
         al = Util.readFile(directory, "al.txt");
         au = Util.readFile(directory, "au.txt");
@@ -75,27 +101,19 @@ public class ProffilMatrix {
         return di.size();
     }
 
-    public void printMatrix() {
-        List<List<Double>> matrix = new ArrayList<>();//Only for debug
-        for (int i = 0; i < di.size(); ++i) {
-            matrix.add(new ArrayList<>(Collections.nCopies(di.size(), 0.0)));
-        }
-        for (int i = 0; i < di.size(); ++i) {
-            matrix.get(i).set(i, di.get(i));
-        }
-        for (int i = 0; i < di.size(); ++i) {
-            int ind = ia.get(i + 1) - 1;
-            for (int j = i - 1; j >= 0; --j, ind--) {
-                if (ind < ia.get(i)) {
-                    break;
-                }
-                matrix.get(i).set(j, al.get(ind));
-                matrix.get(j).set(i, au.get(ind));
+    public void writeMatrix(String directory) {
+        Path path = Path.of(directory);
+        try {
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
             }
+        } catch (IOException e) {
+            System.err.println("Can't create directory");
+            return;
         }
-
-        for (int i = 0; i < di.size(); ++i) {
-            System.out.println(matrix.get(i));
-        }
+        Util.writeFile(directory, "di.txt", di);
+        Util.writeFile(directory, "al.txt", al);
+        Util.writeFile(directory, "au.txt", au);
+        Util.writeFile(directory, "ia.txt", ia);
     }
 }

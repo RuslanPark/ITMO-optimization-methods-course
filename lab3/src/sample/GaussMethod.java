@@ -4,11 +4,9 @@ import java.util.List;
 
 public class GaussMethod {
     public void calculate(String directory) {
-        ProffilMatrix matrix = new ProffilMatrix();
-        matrix.readMatrix(directory);
+        ProfileMatrix matrix = new ProfileMatrix(directory);
         List<Double> f = Util.readFile(directory, "f.txt");
 
-        matrix.printMatrix();
         System.out.println();
         for (int k = 0; k < matrix.size(); ++k) {
             double max = matrix.get(k, k);
@@ -23,10 +21,10 @@ public class GaussMethod {
             matrix.swap(k, maxRow);
 
             for (int i = k + 1; i < matrix.size(); ++i) {
-                double coef = matrix.get(i, k) / matrix.get(k, k);
-                f.set(i, f.get(i) - coef * f.get(k));
+                double coefficient = matrix.get(i, k) / matrix.get(k, k);
+                f.set(i, f.get(i) - coefficient * f.get(k));
                 for (int j = k; j < matrix.size(); ++j) {
-                    matrix.set(i, j, matrix.get(i, j) - coef * matrix.get(k, j));
+                    matrix.set(i, j, matrix.get(i, j) - coefficient * matrix.get(k, j));
                 }
             }
         }

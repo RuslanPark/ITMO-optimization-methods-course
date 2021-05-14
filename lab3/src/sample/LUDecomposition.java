@@ -3,8 +3,7 @@ import java.util.List;
 
 public class LUDecomposition {
     public void calculate(String directory) {
-        ProffilMatrix matrix = new ProffilMatrix();
-        matrix.readMatrix(directory);
+        ProfileMatrix matrix = new ProfileMatrix(directory);
         List<Double> f = Util.readFile(directory, "f.txt");
 
         for (int i = 1; i < matrix.size(); ++i) {
@@ -13,7 +12,6 @@ public class LUDecomposition {
                 for (int k = 0; k < j; ++k) {
                     sum += matrix.get(i, k) * matrix.get(k, j);
                 }
-
                 matrix.set(i, j, matrix.get(i, j) - sum);
             }
 
@@ -22,7 +20,6 @@ public class LUDecomposition {
                 for (int k = 0; k < j; ++k) {
                     sum += matrix.get(j, k) * matrix.get(k, i);
                 }
-
                 matrix.set(j, i, (matrix.get(j, i) - sum) / matrix.get(j, j));
             }
 
