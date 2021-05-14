@@ -1,8 +1,6 @@
 package sample;
 
-import javax.xml.stream.events.Characters;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -78,11 +76,11 @@ public class MatrixGenerator {
             System.err.println("Can't create directory");
             return;
         }
-        writeFile(directory, "di.txt", di);
-        writeFile(directory, "al.txt", al);
-        writeFile(directory, "au.txt", au);
-        writeFile(directory, "ia.txt", ia);
-        writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
+        Util.writeFile(directory, "di.txt", di);
+        Util.writeFile(directory, "al.txt", al);
+        Util.writeFile(directory, "au.txt", au);
+        Util.writeFile(directory, "ia.txt", ia);
+        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
         writeMatrix(directory, "matrix.txt", matrix);//For debug only
     }
 
@@ -94,17 +92,6 @@ public class MatrixGenerator {
                     fileWriter.write(matrix.get(i).get(j) + " ");
                 }
                 fileWriter.write(String.format("%n"));
-            }
-        } catch (IOException e) {
-            System.err.println("Error while writing file " + filename);
-        }
-    }
-
-    private static <T> void writeFile(String directory, String filename, List<T> list) {
-        Path filePath = Path.of(directory, filename);
-        try(final BufferedWriter fileWriter = Files.newBufferedWriter(filePath)) {
-            for (int i = 0; i < list.size(); ++i) {
-                fileWriter.write(list.get(i) + " ");
             }
         } catch (IOException e) {
             System.err.println("Error while writing file " + filename);
@@ -165,11 +152,11 @@ public class MatrixGenerator {
             System.err.println("Can't create directory");
             return;
         }
-        writeFile(directory, "di.txt", di);
-        writeFile(directory, "al.txt", al);
-        writeFile(directory, "au.txt", au);
-        writeFile(directory, "ia.txt", ia);
-        writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
+        Util.writeFile(directory, "di.txt", di);
+        Util.writeFile(directory, "al.txt", al);
+        Util.writeFile(directory, "au.txt", au);
+        Util.writeFile(directory, "ia.txt", ia);
+        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
         writeMatrix(directory, "matrix.txt", matrix);//For debug only
     }
 }
