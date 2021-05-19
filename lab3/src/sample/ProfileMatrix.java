@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProfileMatrix {
+public class ProfileMatrix implements Matrix {
     private final List<Double> di;
     private final List<Double> al;
     private final List<Double> au;
@@ -63,6 +63,7 @@ public class ProfileMatrix {
         swaps.set(r2, temp);
     }
 
+    @Override
     public double get(int i, int j) {
         int row = swaps.get(i);
         if (row < j) {
@@ -82,6 +83,7 @@ public class ProfileMatrix {
         }
     }
 
+    @Override
     public void set(int i, int j, double value) {
         int row = swaps.get(i);
         if (row < j) {
@@ -97,10 +99,12 @@ public class ProfileMatrix {
         }
     }
 
+    @Override
     public int size() {
         return di.size();
     }
 
+    @Override
     public void writeMatrix(String directory) {
         Path path = Path.of(directory);
         try {
