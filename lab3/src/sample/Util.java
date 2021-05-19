@@ -15,9 +15,12 @@ public class Util {
         List<Double> res = new ArrayList<>();
         Path filePath = Path.of(directory, filename);
         try(final BufferedReader fileReader = Files.newBufferedReader(filePath)) {
-            res = Arrays.stream(fileReader.readLine().split(" "))
-                    .map(Double::parseDouble)
-                    .collect(Collectors.toList());
+            String line = fileReader.readLine();
+            if (line != null) {
+                res = Arrays.stream(line.split(" "))
+                        .map(Double::parseDouble)
+                        .collect(Collectors.toList());
+            }
         } catch (IOException e) {
             System.err.println("Error while reading file " + filename);
             System.err.println(e.getMessage());

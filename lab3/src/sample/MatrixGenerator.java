@@ -56,7 +56,7 @@ public class MatrixGenerator {
         task2Matrix.writeMatrix(directory);
 
         task2F = multiplyMatrixOnVector(matrix, x);
-        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
+        Util.writeFile(directory, "f.txt", task2F);
     }
 
     public void task2Regenerate(int k, String directory) {
@@ -95,22 +95,8 @@ public class MatrixGenerator {
                 matrix.get(j - 1).set(i - 1, 1.0 / (i + j - 1));
             }
         }
-        List<Double> di = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            di.add(matrix.get(i).get(i));
-        }
-
-        List<Double> al = new ArrayList<>();
-        List<Double> au = new ArrayList<>();
-        List<Integer> ia = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            ia.add(al.size() + 1);
-            for (int j = 0; j < i; ++j) {
-                al.add(matrix.get(i).get(j));
-                au.add(matrix.get(j).get(i));
-            }
-        }
-        ia.add(al.size() + 1);
+        ProfileMatrix profileMatrix = new ProfileMatrix(matrix);
+        profileMatrix.writeMatrix(directory);
 
         Path path = Path.of(directory);
         try {
@@ -121,10 +107,6 @@ public class MatrixGenerator {
             System.err.println("Can't create directory");
             return;
         }
-        Util.writeFile(directory, "di.txt", di);
-        Util.writeFile(directory, "al.txt", al);
-        Util.writeFile(directory, "au.txt", au);
-        Util.writeFile(directory, "ia.txt", ia);
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
     }
 }

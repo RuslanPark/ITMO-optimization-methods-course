@@ -2,7 +2,7 @@ package sample;
 import java.util.List;
 
 public class LUDecomposition {
-    public void calculate(String directory) {
+    public static void calculate(String directory) {
         ProfileMatrix matrix = new ProfileMatrix(directory);
         List<Double> f = Util.readFile(directory, "f.txt");
 
