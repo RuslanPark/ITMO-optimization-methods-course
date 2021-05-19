@@ -109,4 +109,27 @@ public class MatrixGenerator {
         }
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
     }
+
+    public void task4Generate(String directory, int n) {
+        List<Integer> x = new ArrayList<>();
+        for (int i = 1; i <= n; ++i) {
+            x.add(i);
+        }
+
+        List<List<Double>> matrix = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            matrix.add(new ArrayList<>(Collections.nCopies(n, 0.0)));
+        }
+
+        Random random = new Random();
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                matrix.get(i).set(j, random.nextDouble() + 1);
+            }
+        }
+        ProfileMatrix profileMatrix = new ProfileMatrix(matrix);
+        profileMatrix.writeMatrix(directory);
+
+        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
+    }
 }
