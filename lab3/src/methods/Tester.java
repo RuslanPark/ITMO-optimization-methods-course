@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Tester {
     public static void main(String[] args) {
-        task2();
+        /*task2();
         task3();
-        task4();
+        task4();*/
+        task6Gilbert();
     }
 
     private static void task2() {
@@ -73,6 +74,40 @@ public class Tester {
         double normGauss= calcNorm(directory, x);
 
         System.out.println(n + " " + normLU + " " + normGauss);
+    }
+
+    private static void task5Random() {
+        MatrixGenerator generator = new MatrixGenerator();
+        for (int n = 1; n <= 100; n += 10) {
+            List<Double> x = new ArrayList<>();
+            List<Double> xx = new ArrayList<>();
+            for (int i = 1; i <= n; ++i) {
+                x.add((double) i);
+                xx.add(0.2);
+            }
+            List<Double> res = ConjugateGradientsMethod.solve(generator.task5Generate("task4n" + n, n), x, xx, 0.0000001);
+            for (Double i : res) {
+                System.out.print(i + " ");
+            }
+            System.out.println("\n---------\n");
+        }
+    }
+
+    private static void task6Gilbert() {
+        MatrixGenerator generator = new MatrixGenerator();
+        for (int n = 10; n <= 1000; n += 10) {
+            List<Double> x = new ArrayList<>();
+            List<Double> xx = new ArrayList<>();
+            for (int i = 1; i <= n; ++i) {
+                x.add((double) i);
+                xx.add(0.2);
+            }
+            List<Double> res = ConjugateGradientsMethod.solve(generator.task6Generate("task4n" + n, n), x, xx, 0.0000001);
+            for (Double i : res) {
+                System.out.print(i + " ");
+            }
+            System.out.println("\n---------\n");
+        }
     }
 
     private static double calcNorm(String directory, List<Double> x) {

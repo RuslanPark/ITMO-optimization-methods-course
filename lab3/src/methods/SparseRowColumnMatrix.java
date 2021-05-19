@@ -41,7 +41,7 @@ public class SparseRowColumnMatrix implements Matrix {
     @Override
     public double get(int i, int j) {
         if (i < j) {
-            Integer t = i;
+            int t = i;
             i = j;
             j = t;
         }
@@ -62,7 +62,7 @@ public class SparseRowColumnMatrix implements Matrix {
     @Override
     public void set(int i, int j, double value) {
         if (i > j) {
-            Integer t = i;
+            int t = i;
             i = j;
             j = t;
         }

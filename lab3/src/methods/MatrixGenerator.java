@@ -131,4 +131,53 @@ public class MatrixGenerator {
 
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
     }
+
+    public SparseRowColumnMatrix task5Generate(String directory, int n) {
+        List<Integer> x = new ArrayList<>();
+        for (int i = 1; i <= n; ++i) {
+            x.add(i);
+        }
+
+        List<List<Double>> matrix = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            matrix.add(new ArrayList<>(Collections.nCopies(n, 0.0)));
+        }
+
+        Random random = new Random();
+        for (int i = 0; i < n; ++i) {
+            for (int j = i; j < n; ++j) {
+                matrix.get(i).set(j, random.nextDouble() + 1);
+                matrix.get(j).set(i, matrix.get(i).get(j));
+            }
+        }
+        SparseRowColumnMatrix sparseRowColumnMatrix = new SparseRowColumnMatrix(matrix);
+        return sparseRowColumnMatrix;
+        /*sparseRowColumnMatrix.writeMatrix(directory);
+
+        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));*/
+    }
+
+    public SparseRowColumnMatrix task6Generate(String directory, int n) {
+        List<Integer> x = new ArrayList<>();
+        for (int i = 1; i <= n; ++i) {
+            x.add(i);
+        }
+
+        List<List<Double>> matrix = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            matrix.add(new ArrayList<>(Collections.nCopies(n, 0.0)));
+        }
+
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                matrix.get(i).set(j, (double) (1 / (i + j + 1)));
+            }
+        }
+        SparseRowColumnMatrix sparseRowColumnMatrix = new SparseRowColumnMatrix(matrix);
+        return sparseRowColumnMatrix;
+        /*sparseRowColumnMatrix.writeMatrix(directory);
+
+        Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));*/
+    }
 }
