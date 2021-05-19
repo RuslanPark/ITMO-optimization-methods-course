@@ -1,8 +1,8 @@
-package sample;
+package methods;
 
 import java.util.List;
 
-import static sample.MatrixAndVectorOperations.*;
+import static methods.MatrixAndVectorOperations.*;
 
 public class ConjugateGradientsMethod {
     static List<Double> solve(Matrix a, List<Double> b, List<Double> x, double eps) {

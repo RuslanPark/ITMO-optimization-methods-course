@@ -1,4 +1,4 @@
-package sample;
+package methods;
 
 import java.io.IOException;
 import java.nio.file.Files;

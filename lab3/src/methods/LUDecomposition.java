@@ -1,4 +1,4 @@
-package sample;
+package methods;
 import java.util.List;
 
 public class LUDecomposition {

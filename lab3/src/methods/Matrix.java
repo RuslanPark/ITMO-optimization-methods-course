@@ -1,4 +1,4 @@
-package sample;
+package methods;
 
 public interface Matrix {
     double get(int i, int j);
