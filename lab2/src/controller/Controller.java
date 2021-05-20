@@ -81,7 +81,7 @@ public class Controller {
                 if (event.isDragDetect()) {
                     startX = axisX.getValueForDisplay(event.getX()).doubleValue();
                     startY = axisY.getValueForDisplay(event.getY()).doubleValue();
-                    System.out.println("Start:\n" + startX + " " + startY);
+                    //System.out.println("Start:\n" + startX + " " + startY);
                 }
 
 
@@ -93,7 +93,7 @@ public class Controller {
                 double newX = startX - valueX;
                 double newY = startY - valueY;
 
-                System.out.println(newX + " " + newY);
+                //System.out.println(newX + " " + newY);
 
                 double dX;
                 double dY;
@@ -116,9 +116,6 @@ public class Controller {
 
             }
         });
-
-
-
 
         lineChart.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
@@ -228,13 +225,13 @@ public class Controller {
         }
 
         OptionsMenu.showMenu();
-        buildGraph(OptionsMenu.epsilon);
+        buildGraph(OptionsMenu.epsilon, OptionsMenu.x, OptionsMenu.y);
     }
 
-    public void buildGraph(double epsilon) {
+    public void buildGraph(double epsilon, double x, double y) {
 
         List<List<Double>> matrix = Function.funcMatrix(func);
-        List<Double> startPoint = List.of(1.0, 1.0);
+        List<Double> startPoint = List.of(x, y);
 
         Function function = new Function(matrix);
         method.calculate(startPoint, epsilon, function);
