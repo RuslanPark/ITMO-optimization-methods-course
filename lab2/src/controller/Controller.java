@@ -10,6 +10,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.Pair;
 import methods.*;
@@ -28,6 +31,8 @@ public class Controller {
     private AbstractMethod method = null;
     int total;
     double zoom = 1.0;
+    double startX;
+    double startY;
 
     @FXML
     public void initialize() {
@@ -67,6 +72,53 @@ public class Controller {
                 }
             }
         });
+
+
+        lineChart.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isDragDetect()) {
+                    startX = axisX.getValueForDisplay(event.getX()).doubleValue();
+                    startY = axisY.getValueForDisplay(event.getY()).doubleValue();
+                    System.out.println("Start:\n" + startX + " " + startY);
+                }
+
+
+                double x = event.getX();
+                double y = event.getY();
+                double valueX = axisX.getValueForDisplay(x).doubleValue();
+                double valueY = axisY.getValueForDisplay(y).doubleValue();
+
+                double newX = startX - valueX;
+                double newY = startY - valueY;
+
+                System.out.println(newX + " " + newY);
+
+                double dX;
+                double dY;
+                if (newX < 0) {
+                    dX = -0.1 * zoom;
+                } else {
+                    dX = 0.1 * zoom;
+                }
+                if (newY < 0) {
+                    dY = -0.1 * zoom;
+                } else {
+                    dY = 0.1 * zoom;
+                }
+
+                axisX.setLowerBound(axisX.getLowerBound() + dX);
+                axisX.setUpperBound(axisX.getUpperBound() + dX);
+                axisY.setLowerBound(axisY.getLowerBound() + dY);
+                axisY.setUpperBound(axisY.getUpperBound() + dY);
+
+
+            }
+        });
+
+
+
 
         lineChart.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override

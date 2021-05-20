@@ -19,16 +19,16 @@ public class Function implements FunctionInterface {
             }
             case ("second") -> {
                 return List.of(
-                        List.of(13.0, -10.0, 30.0),
-                        List.of(-10.0, 64.0, 126.0),
-                        List.of(30.0, 126.0, 64.0)
+                        List.of(130.0, 0.0, 0.0),
+                        List.of(0.0, 1.0, 0.0),
+                        List.of(0.0, 0.0, 1.0)
                 );
             }
             default -> {
                 return List.of(
-                        List.of(13.0, -10.0, 30.0),
-                        List.of(-10.0, 64.0, 126.0),
-                        List.of(30.0, 126.0, 64.0)
+                        List.of(13.0, -3.0, 9.0),
+                        List.of(-3.0, 1.0, 50.0),
+                        List.of(9.0, 50.0, 1000.0)
                 );
             }
         }
@@ -40,10 +40,10 @@ public class Function implements FunctionInterface {
                 return 64 * z - 127 * y * y -2550 * y - 807;
             }
             case ("second") -> {
-                return 64 * z - 127 * y * y -2550 * y - 807;
+                return z - y * y - 130;
             }
             default -> {
-                return 64 * z - 127 * y * y -2550 * y - 807;
+                return 40 * z +1724 * y * y + 7260 * y + 1025;
             }
         }
     }
@@ -54,10 +54,10 @@ public class Function implements FunctionInterface {
                 return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
             }
             case ("second") -> {
-                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+                return -sqrt(funcSqrt(chose, y, z));
             }
             default -> {
-                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+                return (-sqrt(funcSqrt(chose, y, z)) + 42 * y - 5) / 200;
             }
         }
     }
@@ -67,10 +67,10 @@ public class Function implements FunctionInterface {
                 return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
             }
             case ("second") -> {
-                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+                return sqrt(funcSqrt(chose, y, z));
             }
             default -> {
-                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+                return (sqrt(funcSqrt(chose, y, z)) + 42 * y - 5) / 200;
             }
         }
     }

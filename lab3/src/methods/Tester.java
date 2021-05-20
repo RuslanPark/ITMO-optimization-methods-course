@@ -100,7 +100,7 @@ public class Tester {
             List<Double> xx = new ArrayList<>();
             for (int i = 1; i <= n; ++i) {
                 x.add((double) i);
-                xx.add(0.2);
+                xx.add(0.0002);
             }
             List<Double> res = ConjugateGradientsMethod.solve(generator.task6Generate("task4n" + n, n), x, xx, 0.0000001);
             for (Double i : res) {
