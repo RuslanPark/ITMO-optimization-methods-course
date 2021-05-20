@@ -2,7 +2,6 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -10,12 +9,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.util.Pair;
 import methods.*;
+
 import java.util.*;
 
 public class Controller {
@@ -74,111 +70,98 @@ public class Controller {
         });
 
 
-        lineChart.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.isDragDetect()) {
-                    startX = axisX.getValueForDisplay(event.getX()).doubleValue();
-                    startY = axisY.getValueForDisplay(event.getY()).doubleValue();
-                    //System.out.println("Start:\n" + startX + " " + startY);
-                }
-
-
-                double x = event.getX();
-                double y = event.getY();
-                double valueX = axisX.getValueForDisplay(x).doubleValue();
-                double valueY = axisY.getValueForDisplay(y).doubleValue();
-
-                double newX = startX - valueX;
-                double newY = startY - valueY;
-
-                //System.out.println(newX + " " + newY);
-
-                double dX;
-                double dY;
-                if (newX < 0) {
-                    dX = -0.1 * zoom;
-                } else {
-                    dX = 0.1 * zoom;
-                }
-                if (newY < 0) {
-                    dY = -0.1 * zoom;
-                } else {
-                    dY = 0.1 * zoom;
-                }
-
-                axisX.setLowerBound(axisX.getLowerBound() + dX);
-                axisX.setUpperBound(axisX.getUpperBound() + dX);
-                axisY.setLowerBound(axisY.getLowerBound() + dY);
-                axisY.setUpperBound(axisY.getUpperBound() + dY);
-
-
+        lineChart.setOnMouseDragged(event -> {
+            if (event.isDragDetect()) {
+                startX = axisX.getValueForDisplay(event.getX()).doubleValue();
+                startY = axisY.getValueForDisplay(event.getY()).doubleValue();
             }
+
+            double x = event.getX();
+            double y = event.getY();
+            double valueX = axisX.getValueForDisplay(x).doubleValue();
+            double valueY = axisY.getValueForDisplay(y).doubleValue();
+
+            double newX = startX - valueX;
+            double newY = startY - valueY;
+
+            double dX;
+            double dY;
+            if (newX < 0) {
+                dX = -0.1 * zoom;
+            } else {
+                dX = 0.1 * zoom;
+            }
+            if (newY < 0) {
+                dY = -0.1 * zoom;
+            } else {
+                dY = 0.1 * zoom;
+            }
+
+            axisX.setLowerBound(axisX.getLowerBound() + dX);
+            axisX.setUpperBound(axisX.getUpperBound() + dX);
+            axisY.setLowerBound(axisY.getLowerBound() + dY);
+            axisY.setUpperBound(axisY.getUpperBound() + dY);
         });
 
-        lineChart.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                final double minX = axisX.getLowerBound();
-                final double maxX = axisX.getUpperBound();
-                final double minY = axisY.getLowerBound();
-                final double maxY = axisY.getUpperBound();
+        lineChart.setOnScroll(event -> {
+            final double minX = axisX.getLowerBound();
+            final double maxX = axisX.getUpperBound();
+            final double minY = axisY.getLowerBound();
+            final double maxY = axisY.getUpperBound();
 
-                double thresholdX = minX + (maxX - minX) / 2d;
-                double x = event.getX();
-                double valueX = axisX.getValueForDisplay(x).doubleValue();
+            double thresholdX = minX + (maxX - minX) / 2d;
+            double x = event.getX();
+            double valueX = axisX.getValueForDisplay(x).doubleValue();
 
-                double thresholdY = minY + (maxY - minY) / 2d;
-                double y = event.getY();
-                double valueY = axisY.getValueForDisplay(y).doubleValue();
+            double thresholdY = minY + (maxY - minY) / 2d;
+            double y = event.getY();
+            double valueY = axisY.getValueForDisplay(y).doubleValue();
 
-                double direction = event.getDeltaY();
-                if (direction > 0) {
-                    if (maxX - minX > zoom) {
-                        if (valueX > thresholdX) {
-                            axisX.setLowerBound(minX + zoom);
-                        } else {
-                            axisX.setUpperBound(maxX - zoom);
-                        }
-                    }
-                    if (maxY - minY > zoom) {
-                        if (valueY > thresholdY) {
-                            axisY.setLowerBound(minY + zoom);
-                        } else {
-                            axisY.setUpperBound(maxY - zoom);
-                        }
-                    }
-                    if (maxX - minX < 10 * zoom) {
-                        zoom /= 10;
-                    }
-                    if (maxY - minY < 10 * zoom) {
-                        zoom /= 10;
-                    }
-                } else {
-                    if (maxX - minX > 10 * zoom) {
-                        zoom *= 10;
-                    }
-                    if (maxY - minY > 10 * zoom) {
-                        zoom *= 10;
-                    }
-                    if (valueX < thresholdX) {
-                        double nextBound = Math.max(lowerX, minX - zoom);
-                        axisX.setLowerBound(nextBound);
+            double direction = event.getDeltaY();
+            if (direction > 0) {
+                if (maxX - minX > zoom) {
+                    if (valueX > thresholdX) {
+                        axisX.setLowerBound(minX + zoom);
                     } else {
-                        double nextBound = Math.min(upperX, maxX + zoom);
-                        axisX.setUpperBound(nextBound);
-                    }
-                    if (valueY < thresholdY) {
-                        double nextBound = Math.max(lowerY, minY - zoom);
-                        axisY.setLowerBound(nextBound);
-                    } else {
-                        double nextBound = Math.min(upperY, maxY + zoom);
-                        axisY.setUpperBound(nextBound);
+                        axisX.setUpperBound(maxX - zoom);
                     }
                 }
-
+                if (maxY - minY > zoom) {
+                    if (valueY > thresholdY) {
+                        axisY.setLowerBound(minY + zoom);
+                    } else {
+                        axisY.setUpperBound(maxY - zoom);
+                    }
+                }
+                if (maxX - minX < 10 * zoom) {
+                    zoom /= 10;
+                }
+                if (maxY - minY < 10 * zoom) {
+                    zoom /= 10;
+                }
+            } else {
+                if (maxX - minX > 10 * zoom) {
+                    zoom *= 10;
+                }
+                if (maxY - minY > 10 * zoom) {
+                    zoom *= 10;
+                }
+                if (valueX < thresholdX) {
+                    double nextBound = Math.max(lowerX, minX - zoom);
+                    axisX.setLowerBound(nextBound);
+                } else {
+                    double nextBound = Math.min(upperX, maxX + zoom);
+                    axisX.setUpperBound(nextBound);
+                }
+                if (valueY < thresholdY) {
+                    double nextBound = Math.max(lowerY, minY - zoom);
+                    axisY.setLowerBound(nextBound);
+                } else {
+                    double nextBound = Math.min(upperY, maxY + zoom);
+                    axisY.setUpperBound(nextBound);
+                }
             }
+
         });
 
         ObservableList<String> functions = FXCollections.observableArrayList("F1", "F2", "F3");
@@ -287,7 +270,6 @@ public class Controller {
                 if (sq >= 0) {
                     double x1 = Function.funcXFirst(func, y, z);
                     double x2 = Function.funcXSecond(func, y, z);
-                    //System.out.println(y + " " + x1 + " " + x2);
                     arrayList1.add(new Pair<>(x1, y));
                     arrayList2.add(new Pair<>(x2, y));
                 }

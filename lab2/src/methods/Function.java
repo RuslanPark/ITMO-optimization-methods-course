@@ -135,8 +135,8 @@ public class Function implements FunctionInterface {
     public double calculateGradientNorm(List<Double> x) {
         List<Double> grad = calculateGradient(x);
         double res = 0;
-        for (int i = 0; i < grad.size(); ++i) {
-            res += grad.get(i) * grad.get(i);
+        for (Double aDouble : grad) {
+            res += aDouble * aDouble;
         }
         res = Math.sqrt(res);
         return res;
