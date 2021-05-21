@@ -9,9 +9,6 @@ public interface FunctionInterface {
     double calculateGradientNorm(List<Double> x);
     //Returns function gradient in point x
     List<Double> calculateGradient(List<Double> x);
-    //Returns function matrix
-    List<List<Double>> getMatrix();
-    double getAlpha();
+    //Returns A*p
     List<Double> multiplyOnVector(List<Double> p);
-    List<Double> getB();
 }

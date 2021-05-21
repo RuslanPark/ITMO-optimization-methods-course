@@ -9,7 +9,7 @@ public class SteepestDescent extends AbstractMethod {
 
         while (function.calculateGradientNorm(x) >= epsilon) {
             List<Double> functionGradient = function.calculateGradient(x);
-            alpha = OneDimensionalMethods.brents(c->
+            alpha = OneDimensionalMethods.parabolas(c->
                          function.calculateValue(subtract(x, multiplyByConstant(functionGradient, c)))
                     );
 

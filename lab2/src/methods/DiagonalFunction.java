@@ -6,18 +6,15 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class DiagonalFunction implements FunctionInterface {
-    private List<Double> matrix;
-    private List<Double> gradient;
+    private final List<Double> matrix;
+    private final List<Double> gradient;
 
     public DiagonalFunction(List<Double> matrix) {
         this.matrix = matrix;
-        findGradient();
-    }
 
-    private void findGradient() {
         gradient = new ArrayList<>();
-        for (int i = 0; i < matrix.size(); ++i) {
-            gradient.add(2.0 * matrix.get(i));
+        for (Double coefficient : matrix) {
+            gradient.add(2.0 * coefficient);
         }
     }
 
@@ -50,46 +47,6 @@ public class DiagonalFunction implements FunctionInterface {
     }
 
     @Override
-    public List<List<Double>> getMatrix() {
-        List<List<Double>> answer = new ArrayList<>();
-
-        answer.add(new ArrayList<>());
-
-        for (int i = 0; i <= matrix.size(); i++) {
-            answer.get(0).add(0.0);
-        }
-
-        for (int i = 1; i <= matrix.size(); i++)
-        {
-            answer.add(new ArrayList<>());
-            answer.get(i).add(0.0);
-            for (int j = 1; j <= matrix.size(); j++)
-            {
-                if (i == j) {
-                    answer.get(i).add(matrix.get(i - 1));
-                } else {
-                    answer.get(i).add(0.0);
-                }
-            }
-        }
-
-        return answer;
-    }
-
-    @Override
-    public double getAlpha() {
-        double min = IntStream.range(0, matrix.size())
-                .mapToDouble(index -> matrix.get(index))
-                .min()
-                .orElseThrow();
-        double max = IntStream.range(0, matrix.size())
-                .mapToDouble(index -> matrix.get(index))
-                .max()
-                .orElseThrow();
-        return 2 / (min + max);
-    }
-
-    @Override
     public List<Double> multiplyOnVector(List<Double> p) {
         List<Double> answer = new ArrayList<>();
         for (int i = 0; i < matrix.size(); ++i) {
@@ -97,10 +54,5 @@ public class DiagonalFunction implements FunctionInterface {
         }
 
         return answer;
-    }
-
-    @Override
-    public List<Double> getB() {
-        return new ArrayList<Double>(Collections.nCopies(matrix.size(), 0.0));
     }
 }
