@@ -1,6 +1,5 @@
 package methods;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConjugateGradients extends AbstractMethod {
@@ -10,14 +9,10 @@ public class ConjugateGradients extends AbstractMethod {
 
         List<Double> gradient, p, ap;
 
-        gradient = add(function.multiplyOnVector(x), function.getB());
+        gradient = function.calculateGradient(x);
         p = multiplyByConstant(gradient, -1.0);
 
-        double gradientNorm = 0.0;
-        for (Double aDouble : gradient) {
-            gradientNorm += aDouble * aDouble;
-        }
-        gradientNorm = Math.sqrt(gradientNorm);
+        double gradientNorm = function.calculateGradientNorm(x);
         while (gradientNorm >= epsilon) {
             ap = function.multiplyOnVector(p);
             alpha = gradientNorm * gradientNorm / dotProduct(ap, p);
@@ -25,16 +20,11 @@ public class ConjugateGradients extends AbstractMethod {
             x = add(x, multiplyByConstant(p, alpha));
             writePoint(x);
 
-            List<Double> newGradient = add(gradient, multiplyByConstant(ap, alpha));
-            double newGradientNorm = 0.0;
-            for (Double aDouble : newGradient) {
-                newGradientNorm += aDouble * aDouble;
-            }
-            newGradientNorm = Math.sqrt(newGradientNorm);
+            gradient = function.calculateGradient(x);
+            double newGradientNorm = function.calculateGradientNorm(x);
 
             double beta = newGradientNorm * newGradientNorm / (gradientNorm * gradientNorm);
-            p = subtract(multiplyByConstant(p, beta), newGradient);
-            gradient = newGradient;
+            p = subtract(multiplyByConstant(p, beta), gradient);
             gradientNorm = newGradientNorm;
         }
 
@@ -42,7 +32,7 @@ public class ConjugateGradients extends AbstractMethod {
     }
 
     private Double dotProduct(List<Double> a, List<Double> b) {
-        Double answer = 0.0;
+        double answer = 0.0;
 
         for (int i = 0; i < a.size(); i++) {
             answer += a.get(i) * b.get(i);

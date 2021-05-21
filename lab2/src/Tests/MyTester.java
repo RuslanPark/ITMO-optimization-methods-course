@@ -15,9 +15,9 @@ public class MyTester {
                 List.of(-3.0, 1.0, 50.0),
                 List.of(9.0, 50.0, 1000.0));
         List<List<Double>> matrix3 = List.of(
-                List.of(-25.0, -192.0, 50.0),
-                List.of(-192.0, 211.0, -420.0),
-                List.of(50.0, -420.0, 211.0));
+                List.of(97.0, 0.0, 0.0),
+                List.of(0.0, 1.0, -1.999),
+                List.of(0.0, -1.999, 1.0));
         calculateIterationsNum(matrix1);
         System.out.println("------------------------");
         calculateIterationsNum(matrix2);
