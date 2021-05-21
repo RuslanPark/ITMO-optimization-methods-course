@@ -41,9 +41,9 @@ public class Controller {
         final double upperY = axisY.getUpperBound();
 
         lines.setOnAction(event -> {
-            if (!lineChart.getData().isEmpty()) {
+            if (!lineChart.getData().isEmpty() && func != null) {
                 if (lines.isSelected()) {
-                    paintLine();
+                    paintLine(func);
                     if (comboLineBox.getSelectionModel().getSelectedIndex() != 0) {
                         lineChosen();
                     }
@@ -84,17 +84,20 @@ public class Controller {
             double newX = startX - valueX;
             double newY = startY - valueY;
 
+            startX = valueX;
+            startY = valueY;
+
             double dX;
             double dY;
             if (newX < 0) {
-                dX = -0.1 * zoom;
+                dX = -zoom;
             } else {
-                dX = 0.1 * zoom;
+                dX = zoom;
             }
             if (newY < 0) {
-                dY = -0.1 * zoom;
+                dY = -zoom;
             } else {
-                dY = 0.1 * zoom;
+                dY = zoom;
             }
 
             axisX.setLowerBound(axisX.getLowerBound() + dX);
@@ -108,58 +111,37 @@ public class Controller {
             final double maxX = axisX.getUpperBound();
             final double minY = axisY.getLowerBound();
             final double maxY = axisY.getUpperBound();
-
-            double thresholdX = minX + (maxX - minX) / 2d;
-            double x = event.getX();
-            double valueX = axisX.getValueForDisplay(x).doubleValue();
-
-            double thresholdY = minY + (maxY - minY) / 2d;
-            double y = event.getY();
-            double valueY = axisY.getValueForDisplay(y).doubleValue();
-
             double direction = event.getDeltaY();
+
             if (direction > 0) {
-                if (maxX - minX > zoom) {
-                    if (valueX > thresholdX) {
-                        axisX.setLowerBound(minX + zoom);
-                    } else {
-                        axisX.setUpperBound(maxX - zoom);
-                    }
-                }
-                if (maxY - minY > zoom) {
-                    if (valueY > thresholdY) {
-                        axisY.setLowerBound(minY + zoom);
-                    } else {
-                        axisY.setUpperBound(maxY - zoom);
-                    }
-                }
+
+                axisX.setLowerBound(minX + zoom * 2);
+                axisX.setUpperBound(maxX - zoom * 2);
+
+                axisY.setLowerBound(minY + zoom);
+                axisY.setUpperBound(maxY - zoom);
+
                 if (maxX - minX < 10 * zoom) {
                     zoom /= 10;
-                }
-                if (maxY - minY < 10 * zoom) {
-                    zoom /= 10;
+                } else {
+                    if (maxY - minY < 10 * zoom) {
+                        zoom /= 10;
+                    }
                 }
             } else {
                 if (maxX - minX > 10 * zoom) {
-                    zoom *= 10;
-                }
-                if (maxY - minY > 10 * zoom) {
-                    zoom *= 10;
-                }
-                if (valueX < thresholdX) {
-                    double nextBound = Math.max(lowerX, minX - zoom);
-                    axisX.setLowerBound(nextBound);
+                    zoom = Math.min(zoom * 10, 1);
                 } else {
-                    double nextBound = Math.min(upperX, maxX + zoom);
-                    axisX.setUpperBound(nextBound);
+                    if (maxY - minY > 10 * zoom) {
+                        zoom = Math.min(zoom * 10, 1);
+                    }
                 }
-                if (valueY < thresholdY) {
-                    double nextBound = Math.max(lowerY, minY - zoom);
-                    axisY.setLowerBound(nextBound);
-                } else {
-                    double nextBound = Math.min(upperY, maxY + zoom);
-                    axisY.setUpperBound(nextBound);
-                }
+
+                axisX.setLowerBound(Math.max(lowerX, minX - zoom * 2));
+                axisX.setUpperBound(Math.min(upperX, maxX + zoom * 2));
+
+                axisY.setLowerBound(Math.max(lowerY, minY - zoom));
+                axisY.setUpperBound(Math.min(upperY, maxY + zoom));
             }
 
         });
@@ -197,7 +179,7 @@ public class Controller {
             return;
         }
 
-        paintLine();
+        paintLine(func);
         lines.setSelected(true);
         axis.setSelected(true);
 
@@ -258,9 +240,10 @@ public class Controller {
         lineChart.getData().add(graph);
     }
 
-    public void paintLine() {
-        for (int j = -200; j < 100; j += 10) {
+    public void paintLine(String func) {
+        for (int j = -200; j < 200; j += 10) {
             XYChart.Series<Number, Number> graph = new XYChart.Series<>();
+            XYChart.Series<Number, Number> graph2 = new XYChart.Series<>();
             ArrayList<Pair<Double, Double>> arrayList1 = new ArrayList<>();
             ArrayList<Pair<Double, Double>> arrayList2 = new ArrayList<>();
             for (double i = -30.0; i < 30.0; i += 0.1) {
@@ -277,12 +260,30 @@ public class Controller {
             for (Pair<Double, Double> i : arrayList1) {
                 graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
             }
-            for (int i = arrayList2.size() - 1; i > 0; --i) {
-                Pair<Double, Double> p = arrayList2.get(i);
-                graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
+            if (func.equals("third")) {
+                for (Pair<Double, Double> i : arrayList2) {
+                    graph2.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
+                }
+            } else {
+                for (int i = arrayList2.size() - 1; i > 0; --i) {
+                    Pair<Double, Double> p = arrayList2.get(i);
+                    graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
+                }
+                for (Pair<Double, Double> i : arrayList1) {
+                    graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
+                    break;
+                }
             }
-            lineChart.getData().add(0, graph);
-            graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+            if (func.equals("third")) {
+                lineChart.getData().add(0, graph);
+                lineChart.getData().add(0, graph2);
+                graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+                graph2.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+            } else {
+                lineChart.getData().add(0, graph);
+                graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+            }
+
         }
         total = lineChart.getData().size();
     }

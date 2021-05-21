@@ -12,23 +12,23 @@ public class Function implements FunctionInterface {
         switch (chose) {
             case ("first") -> {
                 return List.of(
-                        List.of(13.0, -10.0, 30.0),
-                        List.of(-10.0, 64.0, 126.0),
-                        List.of(30.0, 126.0, 64.0)
-                );
-            }
-            case ("second") -> {
-                return List.of(
                         List.of(130.0, 0.0, 0.0),
                         List.of(0.0, 1.0, 0.0),
                         List.of(0.0, 0.0, 1.0)
                 );
             }
+            case ("second") -> {
+                return List.of(
+                        List.of(13.0, -10.0, 30.0),
+                        List.of(-10.0, 64.0, 126.0),
+                        List.of(30.0, 126.0, 64.0)
+                );
+            }
             default -> {
                 return List.of(
-                        List.of(13.0, -3.0, 9.0),
-                        List.of(-3.0, 1.0, 50.0),
-                        List.of(9.0, 50.0, 1000.0)
+                        List.of(97.0, 0.0, 0.0),
+                        List.of(0.0, 1.0, -1.999),
+                        List.of(0.0, -1.999, 1.0)
                 );
             }
         }
@@ -37,13 +37,13 @@ public class Function implements FunctionInterface {
     public static double funcSqrt(String chose, double y, double z) {
         switch (chose) {
             case ("first") -> {
-                return 64 * z - 127 * y * y -2550 * y - 807;
-            }
-            case ("second") -> {
                 return z - y * y - 130;
             }
+            case ("second") -> {
+                return 64 * z - 127 * y * y -2550 * y - 807;
+            }
             default -> {
-                return 40 * z +1724 * y * y + 7260 * y + 1025;
+                return 4_000_000 * z - 3999 * y * y - 388_000_000;
             }
         }
     }
@@ -51,26 +51,26 @@ public class Function implements FunctionInterface {
 
         switch (chose) {
             case ("first") -> {
-                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
-            }
-            case ("second") -> {
                 return -sqrt(funcSqrt(chose, y, z));
             }
+            case ("second") -> {
+                return (-sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
             default -> {
-                return (-sqrt(funcSqrt(chose, y, z)) + 42 * y - 5) / 200;
+                return (-sqrt(funcSqrt(chose, y, z)) + 1999 * y) / 2000;
             }
         }
     }
     public static double funcXSecond(String chose, double y, double z) {
         switch (chose) {
             case ("first") -> {
-                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
-            }
-            case ("second") -> {
                 return sqrt(funcSqrt(chose, y, z));
             }
+            case ("second") -> {
+                return (sqrt(funcSqrt(chose, y, z)) - 63 * y + 5) / 64;
+            }
             default -> {
-                return (sqrt(funcSqrt(chose, y, z)) + 42 * y - 5) / 200;
+                return (sqrt(funcSqrt(chose, y, z)) + 1999 * y) / 2000;
             }
         }
     }
