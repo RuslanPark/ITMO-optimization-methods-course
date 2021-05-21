@@ -60,11 +60,15 @@ public class Controller {
                     lineChart.getYAxis().setTickLabelsVisible(true);
                     lineChart.getXAxis().setTickMarkVisible(true);
                     lineChart.getYAxis().setTickMarkVisible(true);
+                    lineChart.getXAxis().setLabel("x");
+                    lineChart.getYAxis().setLabel("y");
                 } else {
                     lineChart.getXAxis().setTickLabelsVisible(false);
                     lineChart.getYAxis().setTickLabelsVisible(false);
                     lineChart.getXAxis().setTickMarkVisible(false);
                     lineChart.getYAxis().setTickMarkVisible(false);
+                    lineChart.getXAxis().setLabel("");
+                    lineChart.getYAxis().setLabel("");
                 }
             }
         });
@@ -72,17 +76,17 @@ public class Controller {
 
         lineChart.setOnMouseDragged(event -> {
             if (event.isDragDetect()) {
-                startX = axisX.getValueForDisplay(event.getX()).doubleValue();
-                startY = axisY.getValueForDisplay(event.getY()).doubleValue();
+                startX = event.getX();
+                startY = event.getY();
             }
 
-            double x = event.getX();
-            double y = event.getY();
-            double valueX = axisX.getValueForDisplay(x).doubleValue();
-            double valueY = axisY.getValueForDisplay(y).doubleValue();
+            double valueX = event.getX();
+            double valueY = event.getY();
 
             double newX = startX - valueX;
             double newY = startY - valueY;
+
+            System.out.println(newX + " " + newY);
 
             startX = valueX;
             startY = valueY;
@@ -90,20 +94,24 @@ public class Controller {
             double dX;
             double dY;
             if (newX < 0) {
-                dX = -zoom;
+                dX = -zoom * 0.1;
             } else {
-                dX = zoom;
+                dX = zoom * 0.1;
             }
             if (newY < 0) {
-                dY = -zoom;
+                dY = zoom * 0.1;
             } else {
-                dY = zoom;
+                dY = -zoom * 0.1;
             }
 
-            axisX.setLowerBound(axisX.getLowerBound() + dX);
-            axisX.setUpperBound(axisX.getUpperBound() + dX);
-            axisY.setLowerBound(axisY.getLowerBound() + dY);
-            axisY.setUpperBound(axisY.getUpperBound() + dY);
+            if (newX != 0) {
+                axisX.setLowerBound(axisX.getLowerBound() + dX);
+                axisX.setUpperBound(axisX.getUpperBound() + dX);
+            }
+            if (newY != 0) {
+                axisY.setLowerBound(axisY.getLowerBound() + dY);
+                axisY.setUpperBound(axisY.getUpperBound() + dY);
+            }
         });
 
         lineChart.setOnScroll(event -> {
@@ -146,7 +154,7 @@ public class Controller {
 
         });
 
-        ObservableList<String> functions = FXCollections.observableArrayList("F1", "F2", "F3");
+        ObservableList<String> functions = FXCollections.observableArrayList("f(x, y) = x^2 + y^2 + 130", "f(x, y) = 64x^2 + 126xy + 64y^2 − 10x + 30y + 13");
         comboFunctionsBox.setItems(functions);
         ObservableList<String> methods = FXCollections.observableArrayList("GradientDescent", "SteepestDescent", "ConjugateGradients");
         comboMethodsBox.setItems(methods);
@@ -157,10 +165,10 @@ public class Controller {
         comboLineBox.getSelectionModel().clearSelection();
         lines.setSelected(false);
         axis.setSelected(false);
-        switch (comboFunctionsBox.getValue()) {
-            case ("F1") -> func = "first";
-            case ("F2") -> func = "second";
-            default -> func = "third";
+        if (comboFunctionsBox.getValue().equals("f(x, y) = x^2 + y^2 + 130")) {
+            func = "first";
+        } else {
+            func = "second";
         }
     }
 
@@ -241,9 +249,12 @@ public class Controller {
     }
 
     public void paintLine(String func) {
-        for (int j = -200; j < 200; j += 10) {
+        int dec = 10;
+        if (func.equals("second")) {
+            dec += 20;
+        }
+        for (int j = -200; j < 200; j += dec) {
             XYChart.Series<Number, Number> graph = new XYChart.Series<>();
-            XYChart.Series<Number, Number> graph2 = new XYChart.Series<>();
             ArrayList<Pair<Double, Double>> arrayList1 = new ArrayList<>();
             ArrayList<Pair<Double, Double>> arrayList2 = new ArrayList<>();
             for (double i = -30.0; i < 30.0; i += 0.1) {
@@ -260,30 +271,16 @@ public class Controller {
             for (Pair<Double, Double> i : arrayList1) {
                 graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
             }
-            if (func.equals("third")) {
-                for (Pair<Double, Double> i : arrayList2) {
-                    graph2.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
-                }
-            } else {
-                for (int i = arrayList2.size() - 1; i > 0; --i) {
-                    Pair<Double, Double> p = arrayList2.get(i);
-                    graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
-                }
-                for (Pair<Double, Double> i : arrayList1) {
-                    graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
-                    break;
-                }
+            for (int i = arrayList2.size() - 1; i > 0; --i) {
+                Pair<Double, Double> p = arrayList2.get(i);
+                graph.getData().add(new XYChart.Data<>(p.getKey(), p.getValue()));
             }
-            if (func.equals("third")) {
-                lineChart.getData().add(0, graph);
-                lineChart.getData().add(0, graph2);
-                graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
-                graph2.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
-            } else {
-                lineChart.getData().add(0, graph);
-                graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
+            for (Pair<Double, Double> i : arrayList1) {
+                graph.getData().add(new XYChart.Data<>(i.getKey(), i.getValue()));
+                break;
             }
-
+            lineChart.getData().add(0, graph);
+            graph.getNode().setStyle("-fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-dash-array: 4;");
         }
         total = lineChart.getData().size();
     }

@@ -12,10 +12,6 @@ public class OptionsMenu {
     public static double x = 1;
     public static double y = 1;
 
-    OptionsMenu() {
-
-    }
-
     public static void showMenu() {
         // Create the custom dialog.
         Dialog<String> dialog = new Dialog<>();
