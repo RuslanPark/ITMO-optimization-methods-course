@@ -46,6 +46,7 @@ public class DiagonalFunction implements FunctionInterface {
         return res;
     }
 
+    //Multiply matrix A on vector p
     @Override
     public List<Double> multiplyOnVector(List<Double> p) {
         List<Double> answer = new ArrayList<>();

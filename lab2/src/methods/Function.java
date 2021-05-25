@@ -46,7 +46,6 @@ public class Function implements FunctionInterface {
         }
     }
 
-    // Function matrix. Rows and columns format {1, x1, x2, ..., xn}.
     private final List<List<Double>> matrix;
     private final List<List<Double>> gradient;
 
@@ -110,6 +109,7 @@ public class Function implements FunctionInterface {
         return res;
     }
 
+    //Multiply matrix A on vector p
     @Override
     public List<Double> multiplyOnVector(List<Double> p) {
         List<Double> answer = new ArrayList<>();

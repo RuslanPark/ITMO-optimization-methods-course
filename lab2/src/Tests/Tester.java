@@ -4,29 +4,28 @@ import methods.*;
 
 import java.util.List;
 
-public class MyTester {
+public class Tester {
     public static void main(String[] args) {
         List<List<Double>> matrix1 = List.of(
                 List.of(130.0, 0.0, 0.0),
                 List.of(0.0, 1.0, 0.0),
-                List.of(0.0, 0.0, 1.0));
+                List.of(0.0, 0.0, 1.0)
+        );
         List<List<Double>> matrix2 = List.of(
-                List.of(13.0, -3.0, 9.0),
-                List.of(-3.0, 1.0, 50.0),
-                List.of(9.0, 50.0, 1000.0));
-        List<List<Double>> matrix3 = List.of(
-                List.of(97.0, 0.0, 0.0),
-                List.of(0.0, 1.0, -1.999),
-                List.of(0.0, -1.999, 1.0));
-        calculateIterationsNum(matrix1);
+                List.of(13.0, -10.0, 30.0),
+                List.of(-10.0, 64.0, 126.0),
+                List.of(30.0, 126.0, 64.0)
+        );
+        List<Double> startX = List.of(1.0, 1.0);
+        calculateIterationsNum(matrix1, startX);
         System.out.println("------------------------");
-        calculateIterationsNum(matrix2);
+        calculateIterationsNum(matrix2, startX);
         System.out.println("------------------------");
-        calculateIterationsNum(matrix3);
+        startX = List.of(-4.0, 3.75);
+        calculateIterationsNum(matrix2, startX);
     }
 
-    static void calculateIterationsNum(List<List<Double>> matrix) {
-        List<Double> startX = List.of(1.0, 1.0);
+    static void calculateIterationsNum(List<List<Double>> matrix, List<Double> startX) {
         Function function = new Function(matrix);
         AbstractMethod gradientDescent = new GradientDescent();
         AbstractMethod steepestDescent = new SteepestDescent();
