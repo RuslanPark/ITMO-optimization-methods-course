@@ -1,13 +1,13 @@
-package sample;
+package methods;
 import java.util.List;
 
 public class LUDecomposition {
     public static void calculate(String directory) {
-        ProfileMatrix matrix = new ProfileMatrix(directory);
-        List<Double> f = Util.readFile(directory, "f.txt");
+        ProfileMatrix matrix = new ProfileMatrix(directory);//Read matrix
+        List<Double> f = Util.readFile(directory, "f.txt");//Read right vector
 
-        for (int i = 1; i < matrix.size(); ++i) {
-            for (int j = 0; j < i; ++j) {
+        for (int i = 1; i < matrix.size(); ++i) {//Create matrix L and U and write them in the same place
+            for (int j = 0; j < i; ++j) {//Fill L_ij
                 double sum = 0;
                 for (int k = 0; k < j; ++k) {
                     sum += matrix.get(i, k) * matrix.get(k, j);
@@ -15,7 +15,7 @@ public class LUDecomposition {
                 matrix.set(i, j, matrix.get(i, j) - sum);
             }
 
-            for (int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; ++j) {//Fill U_ji
                 double sum = 0;
                 for (int k = 0; k < j; ++k) {
                     sum += matrix.get(j, k) * matrix.get(k, i);
@@ -27,25 +27,25 @@ public class LUDecomposition {
             for (int k = 0; k < i; ++k) {
                 sum += matrix.get(i, k) * matrix.get(k, i);
             }
-            matrix.set(i, i, matrix.get(i, i) - sum);
+            matrix.set(i, i, matrix.get(i, i) - sum);//Fill L_ii
         }
 
-        for (int i = 0; i < f.size(); ++i) {
-            double sum = f.get(i);
+        for (int i = 0; i < f.size(); ++i) {//Forward stroke
+            double sum = 0;
             for (int k = 0; k < i; ++k) {
-                sum -= matrix.get(i, k) * f.get(k);
+                sum += matrix.get(i, k) * f.get(k);
             }
-            f.set(i, sum / matrix.get(i, i));
+            f.set(i, (f.get(i) - sum) / matrix.get(i, i));
         }
 
-        for (int i = f.size() - 1; i >= 0; --i) {
-            double sum = f.get(i);
+        for (int i = f.size() - 1; i >= 0; --i) {//Reverse motion
+            double sum = 0;
             for (int k = i + 1; k < f.size(); ++k) {
-                sum -= matrix.get(i, k) * f.get(k);
+                sum += matrix.get(i, k) * f.get(k);
             }
-            f.set(i, sum);
+            f.set(i, f.get(i) - sum);
         }
 
-        Util.writeFile(directory, "res.txt", f);
+        Util.writeFile(directory, "res.txt", f);//Write result if file
     }
 }

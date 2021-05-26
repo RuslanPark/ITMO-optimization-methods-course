@@ -59,6 +59,7 @@ abstract public class AbstractMethod {
         return answer;
     }
 
+    //Function returns subtract of 2 points
     protected List<Double> subtract(List<Double> a, List<Double> b) {
         List<Double> answer = new ArrayList<>();
         for (int i = 0; i < a.size(); ++i) {

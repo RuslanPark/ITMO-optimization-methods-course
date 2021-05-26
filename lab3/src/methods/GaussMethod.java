@@ -1,23 +1,25 @@
-package sample;
+package methods;
 
 import java.util.List;
 
 public class GaussMethod {
-    public void calculate(String directory) {
+    public static void calculate(String directory) {
         ProfileMatrix matrix = new ProfileMatrix(directory);
         List<Double> f = Util.readFile(directory, "f.txt");
 
-        System.out.println();
-        for (int k = 0; k < matrix.size(); ++k) {
-            double max = matrix.get(k, k);
+        for (int k = 0; k < matrix.size(); ++k) {//Forward stroke
+            double max = Math.abs(matrix.get(k, k));
             int maxRow = k;
-            for (int i = k + 1; i < matrix.size(); ++i) {
-                double value = matrix.get(i, k);
+            for (int i = k + 1; i < matrix.size(); ++i) {//Find main element
+                double value = Math.abs(matrix.get(i, k));
                 if (value > max) {
                     max = value;
                     maxRow = i;
                 }
             }
+            double temp = f.get(k);//Swap rows
+            f.set(k, f.get(maxRow));
+            f.set(maxRow, temp);
             matrix.swap(k, maxRow);
 
             for (int i = k + 1; i < matrix.size(); ++i) {
@@ -30,7 +32,7 @@ public class GaussMethod {
         }
 
         f.set(f.size() - 1, f.get(f.size() - 1) / matrix.get(f.size() - 1, f.size() - 1));
-        for (int k = matrix.size() - 2; k >= 0; --k) {
+        for (int k = matrix.size() - 2; k >= 0; --k) {//Reverse motion
             double sum = f.get(k);
             for (int j = k + 1; j < matrix.size(); ++j) {
                 sum -= matrix.get(k, j) * f.get(j);

@@ -1,4 +1,4 @@
-package sample;
+package methods;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Util {
+    //Function read vector from filename in directory
     static public List<Double> readFile(String directory, String filename) {
         List<Double> res = new ArrayList<>();
         Path filePath = Path.of(directory, filename);
@@ -28,6 +29,7 @@ public class Util {
         return res;
     }
 
+    //Function writevector in filename in directory
     public static <T> void writeFile(String directory, String filename, List<T> list) {
         Path filePath = Path.of(directory, filename);
         try(final BufferedWriter fileWriter = Files.newBufferedWriter(filePath)) {

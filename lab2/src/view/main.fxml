@@ -48,10 +48,13 @@
 
         <LineChart fx:id="lineChart" alternativeRowFillVisible="false" axisSortingPolicy="NONE" cacheShape="false" createSymbols="false" horizontalZeroLineVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0" verticalZeroLineVisible="false">
             <xAxis>
-                <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" lowerBound="-30.0" minorTickCount="1" side="BOTTOM" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="30.0" />
+                <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="x" lowerBound="-60.0" minorTickCount="1" side="BOTTOM" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="60.0" />
             </xAxis>
             <yAxis>
-                <NumberAxis animated="false" autoRanging="false" cache="true" forceZeroInRange="false" lowerBound="-30.0" minorTickCount="1" side="LEFT" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="30.0" />
+                <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="y" lowerBound="-30.0" minorTickCount="1" side="LEFT" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="30.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></NumberAxis>
             </yAxis>
             <effect>
                 <Blend />

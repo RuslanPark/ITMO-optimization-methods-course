@@ -1,20 +1,20 @@
-package sample;
+package methods;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProfileMatrix implements Matrix {
-    private final List<Double> di;
-    private final List<Double> al;
-    private final List<Double> au;
-    private final List<Integer> ia;
-    private final List<Integer> swaps;
+    private final List<Double> di;//Array with diagonal elements
+    private final List<Double> al;//Bottom triangle
+    private final List<Double> au;//Top triangle
+    private final List<Integer> ia;//Profile
+    private final List<Integer> swaps;//Array with row swaps
 
+    //Constructor build profile matrix from matrix
     public ProfileMatrix(List<List<Double>> matrix) {
         di = new ArrayList<>();
         for (int i = 0; i < matrix.size(); ++i) {
@@ -43,6 +43,7 @@ public class ProfileMatrix implements Matrix {
         }
     }
 
+    //Read profile matrix from files in directory
     public ProfileMatrix(String directory) {
         di = Util.readFile(directory, "di.txt");
         al = Util.readFile(directory, "al.txt");
@@ -57,25 +58,27 @@ public class ProfileMatrix implements Matrix {
         }
     }
 
+    //Swap 2 rows
     public void swap(int r1, int r2) {
         int temp = swaps.get(r1);
         swaps.set(r1, swaps.get(r2));
         swaps.set(r2, temp);
     }
 
+    //Get element with indexes i,j
     @Override
     public double get(int i, int j) {
-        int row = swaps.get(i);
-        if (row < j) {
-            if (j - row <= ia.get(j + 1) - ia.get(j)) {
+        int row = swaps.get(i);//Get row number in saved matrix
+        if (row < j) {//If element in bottom triangle
+            if (j - row <= ia.get(j + 1) - ia.get(j)) {//If element consist
                 return au.get(ia.get(j) + (ia.get(j + 1) - ia.get(j) - (j - row)));
             } else {
                 return 0;
             }
-        } else if (row == j) {
+        } else if (row == j) {//If element on diagonal
             return di.get(row);
-        } else {
-            if (row - j <= ia.get(row + 1) - ia.get(row)) {
+        } else {//If element in upper triangle
+            if (row - j <= ia.get(row + 1) - ia.get(row)) {// If element consist
                 return al.get(ia.get(row) + (ia.get(row + 1) - ia.get(row) - (row - j)));
             } else {
                 return 0;
@@ -83,27 +86,30 @@ public class ProfileMatrix implements Matrix {
         }
     }
 
+    //Set value on position with indexes i,j
     @Override
     public void set(int i, int j, double value) {
-        int row = swaps.get(i);
-        if (row < j) {
-            if (j - row <= ia.get(j + 1) - ia.get(j)) {
+        int row = swaps.get(i);//Get row number in saved matrix
+        if (row < j) {//If element in bottom triangle
+            if (j - row <= ia.get(j + 1) - ia.get(j)) {//If element consist
                 au.set(ia.get(j) + (ia.get(j + 1) - ia.get(j) - (j - row)), value);
             }
-        } else if (row == j) {
+        } else if (row == j) {//If element on diagonal
             di.set(row, value);
-        } else {
-            if (row - j <= ia.get(row + 1) - ia.get(row)) {
+        } else {//If element in upper triangle
+            if (row - j <= ia.get(row + 1) - ia.get(row)) {//If element consist
                 al.set(ia.get(row) + (ia.get(row + 1) - ia.get(row) - (row - j)), value);
             }
         }
     }
 
+    //Returns matrix size
     @Override
     public int size() {
         return di.size();
     }
 
+    //Write matrix in files in directory
     @Override
     public void writeMatrix(String directory) {
         Path path = Path.of(directory);

@@ -10,10 +10,10 @@ public class GradientDescent extends AbstractMethod {
         //Calculate function value in point x_0
         double fx = function.calculateValue(x);
 
-        alpha = function.getAlpha();
+        List<Double> gradient = function.calculateGradient(x);
         double functionGradientNorm = function.calculateGradientNorm(x);
         while (functionGradientNorm >= epsilon) {
-            List<Double> y = subtract(x, multiplyByConstant(function.calculateGradient(x), alpha / functionGradientNorm));
+            List<Double> y = subtract(x, multiplyByConstant(gradient, alpha / functionGradientNorm));
             double fy = function.calculateValue(y);
 
             if (fy < fx) {
@@ -21,6 +21,7 @@ public class GradientDescent extends AbstractMethod {
                 writePoint(x);
                 fx = fy;
                 functionGradientNorm = function.calculateGradientNorm(x);
+                gradient = function.calculateGradient(x);
             } else {
                 alpha /= 2;
             }
