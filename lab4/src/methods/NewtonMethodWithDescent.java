@@ -16,9 +16,7 @@ class NewtonMethodWithDescent {
         Vector finalX1 = x;
         Vector finalP1 = p;
 
-        a = dichotomy(c->{
-            return f.calculate(add(finalX1, mul_n(finalP1, c)));
-        });
+        a = dichotomy(c-> f.calculate(add(finalX1, mul_n(finalP1, c))));
 
         oldX = x;
         x = add(x, mul_n(p, a));

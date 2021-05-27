@@ -84,4 +84,53 @@ public class ProfileMatrix implements Matrix {
     public Integer size() {
         return di.size();
     }
+
+    @Override
+    public Matrix sub(Matrix m1) {
+        List<List<Double>> m = new ArrayList<>();
+
+        Integer n = m1.size();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(this.get(i, j) - m1.get(i, j));
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
+
+    @Override
+    public Matrix divide_n(Double c) {
+        List<List<Double>> m = new ArrayList<>();
+
+        Integer n = this.size();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(this.get(i, j) / c);
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
+
+    static Matrix getIdentity(Integer n) {
+        List<List<Double>> m = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(i == j ? 1.0 : 0.0);
+
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
 }

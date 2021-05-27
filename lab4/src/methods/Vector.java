@@ -57,6 +57,22 @@ class Vector {
         return result;
     }
 
+    Matrix selfProduct() {
+        List<List<Double>> m = new ArrayList<>();
+
+        Integer n = v.size();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(v.get(i) * v.get(j));
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
+
     @Override
     public String toString() {
         return v.toString();
