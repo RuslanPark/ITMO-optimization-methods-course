@@ -2,32 +2,31 @@ package methods;
 
 import java.util.List;
 
-import static methods.VectorOperations.*;
+import static methods.Vector.*;
 
 public class QuadraticFunction implements Function {
-    private List<List<Double>> a;
-    private List<Double> b;
+    private Matrix a;
+    private Vector b;
     private Double c;
-    private List<List<Double>> gradient;
 
     public QuadraticFunction(List<List<Double>> a, List<Double> b, Double c) {
-        this.a = a;
-        this.b = b;
+        this.a = new ProfileMatrix(a);
+        this.b = new Vector(b);
         this.c = c;
     }
 
     @Override
-    public double calculate(List<Double> x) {
-        return dotProduct(product(new ProfileMatrix(a), x), x) / 2 + dotProduct(b, x) + c;
+    public Double calculate(Vector x) {
+        return dotProduct(x.product(a), x) / 2 + dotProduct(b, x) + c;
     }
 
     @Override
-    public List<Double> gradient(List<Double> x) {
-        return add(product(new ProfileMatrix(a), x), b);
+    public Vector gradient(Vector x) {
+        return add(x.product(a), b);
     }
 
     @Override
-    public List<List<Double>> getHesseMatrix() {
+    public Matrix getHesseMatrix() {
         return a;
     }
 }

@@ -3,28 +3,28 @@ package methods;
 import java.util.List;
 
 import static methods.ConjugateGradientsMethod.*;
-import static methods.VectorOperations.*;
+import static methods.Vector.*;
 import static methods.OneDimensionalMethods.*;
 
 class NewtonMethodWithSearch {
-    static List<Double> minimize(Function f, List<Double> x, double eps) {
-        ProfileMatrix h = new ProfileMatrix(f.getHesseMatrix());
-        List<Double> negativeGradient, p, oldX = x;
+    static Vector minimize(Function f, List<Double> x0, double eps) {
+        Matrix h = f.getHesseMatrix();
+        Vector x = new Vector(x0), negativeGradient, p, oldX;
 
         Double a;
 
         do {
-            negativeGradient = mul_n(f.gradient(x), -1);
+            negativeGradient = mul_n(f.gradient(x), -1.0);
             p = solve(h, negativeGradient, x, eps);
 
-            List<Double> finalP = p;
-            List<Double> finalX = x;
+            Vector finalP = p;
+            Vector finalX = x;
 
             a = dichotomy(c-> f.calculate(add(finalX, mul_n(finalP, c))));
 
             oldX = x;
             x = add(x, mul_n(p, a));
-        } while (norm(sub(x, oldX)) > eps);
+        } while (sub(x, oldX).norm() > eps);
 
         return x;
     }

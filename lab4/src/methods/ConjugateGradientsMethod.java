@@ -2,22 +2,22 @@ package methods;
 
 import java.util.List;
 
-import static methods.VectorOperations.*;
+import static methods.Vector.*;
 
 class ConjugateGradientsMethod {
-    static List<Double> solve(Matrix a, List<Double> b, List<Double> x, double eps) {
-        double alpha;
+    static Vector solve(Matrix a, Vector b, Vector x, Double eps) {
+        Double alpha;
 
-        List<Double> p, r, w, y;
+        Vector p, r, w, y;
 
-        r = product(a, x);
+        r = x.product(a);
         r = sub(b, r);
         p = r;
 
-        double rsold = dotProduct(r, r);
+        Double rsold = dotProduct(r, r);
 
         while (true) {
-            w = product(a, p);
+            w = p.product(a);
 
             alpha = rsold / dotProduct(p, w);
 
@@ -27,7 +27,7 @@ class ConjugateGradientsMethod {
             y = mul_n(w, alpha);
             r = sub(r, y);
 
-            double rsnew = dotProduct(r, r);
+            Double rsnew = dotProduct(r, r);
 
             if (rsnew < eps) {
                 return x;

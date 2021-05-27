@@ -1,7 +1,7 @@
 package methods;
 
 public interface Matrix {
-    double get(int i, int j);
-    void set(int i, int j, double value);
-    int size();
+    Double get(Integer i, Integer j);
+    void set(Integer i, Integer j, Double value);
+    Integer size();
 }
