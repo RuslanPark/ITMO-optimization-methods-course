@@ -86,6 +86,23 @@ public class ProfileMatrix implements Matrix {
     }
 
     @Override
+    public Matrix add(Matrix m1) {
+        List<List<Double>> m = new ArrayList<>();
+
+        Integer n = m1.size();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(this.get(i, j) + m1.get(i, j));
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
+
+    @Override
     public Matrix sub(Matrix m1) {
         List<List<Double>> m = new ArrayList<>();
 
@@ -96,6 +113,23 @@ public class ProfileMatrix implements Matrix {
 
             for (int j = 0; j < n; j++) {
                 m.get(i).add(this.get(i, j) - m1.get(i, j));
+            }
+        }
+
+        return new ProfileMatrix(m);
+    }
+
+    @Override
+    public Matrix mul_n(Double c) {
+        List<List<Double>> m = new ArrayList<>();
+
+        Integer n = this.size();
+
+        for (int i = 0; i < n; i++) {
+            m.add(new ArrayList<>());
+
+            for (int j = 0; j < n; j++) {
+                m.get(i).add(this.get(i, j) * c);
             }
         }
 

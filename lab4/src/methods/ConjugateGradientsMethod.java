@@ -1,7 +1,5 @@
 package methods;
 
-import java.util.List;
-
 import static methods.Vector.*;
 
 class ConjugateGradientsMethod {

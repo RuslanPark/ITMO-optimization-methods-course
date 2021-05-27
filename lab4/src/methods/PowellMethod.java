@@ -5,7 +5,7 @@ import java.util.List;
 import static methods.OneDimensionalMethods.*;
 import static methods.Vector.*;
 
-public class PowellMethod {
+class PowellMethod {
     static Vector minimize(Function f, List<Double> x0, double eps) {
         Matrix g = ProfileMatrix.getIdentity(x0.size());
         Vector x = new Vector(x0), negativeGradient = mul_n(f.gradient(x), -1.0), p, oldX, oldGradient, dp, dx, xw;

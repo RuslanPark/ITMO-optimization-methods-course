@@ -19,9 +19,10 @@ public class Main {
 	    List<Double> x = new ArrayList<>(Arrays.asList(1.0, 1.0));
 
 	    System.out.println(NewtonMethod.minimize(f, x, 0.0001));
-		System.out.println(NewtonMethodWithSearch.minimize(f, x, 0.0001));
-		System.out.println(NewtonMethodWithDescent.minimize(f, x, 0.0001));
+		System.out.println(NewtonMethod.minimizeWithSearch(f, x, 0.0001));
+		System.out.println(NewtonMethod.minimizeWithDescent(f, x, 0.0001));
 		System.out.println(DFPMethod.minimize(f, x, 0.0001));
         System.out.println(PowellMethod.minimize(f, x, 0.0001));
+        System.out.println(MarquardtMethod.minimize1(f, x,1000.0, 0.5, 0.0001));
     }
 }
