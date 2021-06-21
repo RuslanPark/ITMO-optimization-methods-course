@@ -132,11 +132,13 @@ public class MatrixGenerator {
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));
     }
 
+    public List<Double> task5F;
     public SparseRowColumnMatrix task5Generate(String directory, int n) {
         List<Integer> x = new ArrayList<>();
         for (int i = 1; i <= n; ++i) {
             x.add(i);
         }
+
 
         List<List<Double>> matrix = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
@@ -150,13 +152,16 @@ public class MatrixGenerator {
                 matrix.get(j).set(i, matrix.get(i).get(j));
             }
         }
-        SparseRowColumnMatrix sparseRowColumnMatrix = new SparseRowColumnMatrix(matrix);
-        return sparseRowColumnMatrix;
+
+        task5F = multiplyMatrixOnVector(matrix, x);
+
+        return new SparseRowColumnMatrix(matrix);
         /*sparseRowColumnMatrix.writeMatrix(directory);
 
         Util.writeFile(directory, "f.txt", multiplyMatrixOnVector(matrix, x));*/
     }
 
+    public List<Double> task6F;
     public SparseRowColumnMatrix task6Generate(String directory, int n) {
         List<Integer> x = new ArrayList<>();
         for (int i = 1; i <= n; ++i) {
@@ -171,9 +176,12 @@ public class MatrixGenerator {
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                matrix.get(i).set(j, (double) (1 / (i + j + 1)));
+                matrix.get(i).set(j, (1.0 / (i + j + 1.0)));
+                //System.out.print(matrix.get(i).get(j) + " ");
             }
+            //System.out.println();
         }
+        task6F = multiplyMatrixOnVector(matrix, x);
         SparseRowColumnMatrix sparseRowColumnMatrix = new SparseRowColumnMatrix(matrix);
         return sparseRowColumnMatrix;
         /*sparseRowColumnMatrix.writeMatrix(directory);

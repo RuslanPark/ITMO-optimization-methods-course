@@ -8,6 +8,7 @@ public class Tester {
         /*task2();
         task3();
         task4();*/
+        //task5Random();
         task6Gilbert();
     }
 
@@ -85,7 +86,8 @@ public class Tester {
                 x.add((double) i);
                 xx.add(0.2);
             }
-            List<Double> res = ConjugateGradientsMethod.solve(generator.task5Generate("task4n" + n, n), x, xx, 0.0000001);
+
+            List<Double> res = ConjugateGradientsMethod.solve(generator.task5Generate("task4n" + n, n), generator.task5F, xx, 0.0000001);
             for (Double i : res) {
                 System.out.print(i + " ");
             }
@@ -95,14 +97,14 @@ public class Tester {
 
     private static void task6Gilbert() {
         MatrixGenerator generator = new MatrixGenerator();
-        for (int n = 10; n <= 1000; n += 10) {
+        for (int n = 10; n <= 1000; n += 100) {
             List<Double> x = new ArrayList<>();
             List<Double> xx = new ArrayList<>();
             for (int i = 1; i <= n; ++i) {
                 x.add((double) i);
                 xx.add(0.0002);
             }
-            List<Double> res = ConjugateGradientsMethod.solve(generator.task6Generate("task4n" + n, n), x, xx, 0.0000001);
+            List<Double> res = ConjugateGradientsMethod.solve(generator.task6Generate("task4n" + n, n), generator.task6F, xx, 0.0000001);
             for (Double i : res) {
                 System.out.print(i + " ");
             }
